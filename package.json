@@ -1,0 +1,32 @@
+{
+  "name": "block-library",
+  "version": "0.1.0",
+  "private": false,
+  "description": "Shared, versioned library of reusable page-builder blocks (Sanity schema + React components) used across client sites.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "exports": {
+    "./schema": {
+      "types": "./dist/schema/index.d.ts",
+      "default": "./dist/schema/index.js"
+    },
+    "./components": {
+      "types": "./dist/components/index.d.ts",
+      "default": "./dist/components/index.js"
+    }
+  },
+  "files": ["dist"],
+  "peerDependencies": {
+    "react": ">=19",
+    "sanity": ">=6"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "react": "^19",
+    "sanity": "^6.7.0",
+    "typescript": "^5"
+  }
+}
