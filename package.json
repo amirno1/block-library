@@ -23,7 +23,7 @@
     "react": ">=19",
     "sanity": ">=6"
   },
-  "devDependencies": {
+  "dependencies": {
     "@types/react": "^19",
     "react": "^19",
     "sanity": "^6.7.0",
