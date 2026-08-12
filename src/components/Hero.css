@@ -82,6 +82,54 @@
   display: block;
 }
 
+.bl-hero--video {
+  position: relative;
+  min-height: 640px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-radius: var(--radius-lg, 24px);
+  overflow: hidden;
+  padding: var(--space-6, 4rem) var(--space-3, 1.5rem);
+}
+.bl-hero-video-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.bl-hero-video-bg video,
+.bl-hero-video-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.bl-hero-video-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55));
+}
+.bl-hero--video .bl-hero-copy {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+}
+.bl-hero--video .bl-hero-heading,
+.bl-hero--video .bl-hero-subheading {
+  color: var(--color-text-inverse, #fff);
+}
+.bl-hero--video .bl-hero-subheading {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 640px) {
+  .bl-hero--video {
+    min-height: 480px;
+  }
+}
+
 @media (max-width: 900px) {
   .bl-hero--split {
     grid-template-columns: 1fr;

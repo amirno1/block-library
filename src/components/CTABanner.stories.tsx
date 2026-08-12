@@ -28,3 +28,15 @@ export const Centered: Story = {
     ctaHref: '#',
   },
 };
+
+export const Image: Story = {
+  args: {
+    variant: 'image',
+    heading: 'Ready to take the next step?',
+    description: 'Start strengthening yourself and your relationships today.',
+    ctaText: 'Get in touch',
+    ctaHref: '#',
+    imageSrc: 'https://placehold.co/720x480',
+    imageAlt: '',
+  },
+};

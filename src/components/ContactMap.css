@@ -1,0 +1,71 @@
+.bl-contact {
+  display: grid;
+  grid-template-columns: 0.8fr 1.2fr;
+  gap: var(--space-5, 3rem);
+  align-items: stretch;
+}
+
+.bl-contact-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-small, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark, var(--color-primary, #333));
+  margin-bottom: var(--space-1, 0.5rem);
+}
+.bl-contact-heading {
+  font-family: var(--font-heading, sans-serif);
+  font-size: var(--fs-h2, 2.25rem);
+  margin: 0 0 var(--space-2, 1rem);
+}
+.bl-contact-description {
+  color: var(--color-text-muted, #666);
+}
+
+.bl-contact-details {
+  margin: var(--space-3, 1.5rem) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2, 1rem);
+}
+.bl-contact-details dt {
+  font-size: var(--fs-small, 0.8125rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted, #666);
+  margin-bottom: 0.15rem;
+}
+.bl-contact-details dd {
+  margin: 0;
+  font-size: var(--fs-h5, 1.0625rem);
+  color: var(--color-text, #1a1a1a);
+}
+.bl-contact-details a {
+  text-decoration: none;
+  color: inherit;
+}
+.bl-contact-details a:hover {
+  color: var(--color-primary-dark, #000);
+}
+
+.bl-contact-map {
+  border-radius: var(--radius-lg, 24px);
+  overflow: hidden;
+  min-height: 360px;
+  background: var(--color-surface-alt, #f0f0f0);
+}
+.bl-contact-map iframe {
+  width: 100%;
+  height: 100%;
+  min-height: 360px;
+  border: 0;
+  display: block;
+}
+
+@media (max-width: 860px) {
+  .bl-contact {
+    grid-template-columns: 1fr;
+  }
+}

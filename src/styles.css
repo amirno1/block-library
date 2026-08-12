@@ -8,3 +8,8 @@
 @import './components/Carousel.css';
 @import './components/FeatureGrid.css';
 @import './components/CTABanner.css';
+@import './components/ServiceTabs.css';
+@import './components/PartnerGrid.css';
+@import './components/PricingTable.css';
+@import './components/Testimonials.css';
+@import './components/ContactMap.css';

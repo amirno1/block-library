@@ -1,5 +1,5 @@
 export interface HeroProps {
-  variant?: 'centered' | 'split';
+  variant?: 'centered' | 'split' | 'video';
   eyebrow?: string;
   heading: string;
   subheading?: string;
@@ -7,6 +7,10 @@ export interface HeroProps {
   imageAlt?: string;
   ctaText?: string;
   ctaHref?: string;
+  /** variant="video" only — background video, autoplay/loop/muted. */
+  videoSrc?: string;
+  /** variant="video" only — shown while the video loads and on browsers that block autoplay. */
+  posterSrc?: string;
 }
 
 export default function Hero({
@@ -18,9 +22,22 @@ export default function Hero({
   imageAlt,
   ctaText,
   ctaHref,
+  videoSrc,
+  posterSrc,
 }: HeroProps) {
   return (
     <section className={`bl-hero bl-hero--${variant}`}>
+      {variant === 'video' && (
+        <div className="bl-hero-video-bg">
+          {videoSrc && (
+            <video autoPlay loop muted playsInline poster={posterSrc}>
+              <source src={videoSrc} />
+            </video>
+          )}
+          {!videoSrc && posterSrc && <img src={posterSrc} alt="" />}
+          <div className="bl-hero-video-scrim" />
+        </div>
+      )}
       <div className="bl-hero-copy">
         {eyebrow && <span className="bl-hero-eyebrow">{eyebrow}</span>}
         <h1 className="bl-hero-heading">{heading}</h1>

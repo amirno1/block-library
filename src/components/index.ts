@@ -9,3 +9,18 @@ export type { FeatureGridProps, FeatureItem } from './FeatureGrid';
 
 export { default as CTABanner } from './CTABanner';
 export type { CTABannerProps } from './CTABanner';
+
+export { default as ServiceTabs } from './ServiceTabs';
+export type { ServiceTabsProps, ServiceTabItem } from './ServiceTabs';
+
+export { default as PartnerGrid } from './PartnerGrid';
+export type { PartnerGridProps, Partner } from './PartnerGrid';
+
+export { default as PricingTable } from './PricingTable';
+export type { PricingTableProps, PricingRow } from './PricingTable';
+
+export { default as Testimonials } from './Testimonials';
+export type { TestimonialsProps, Testimonial } from './Testimonials';
+
+export { default as ContactMap } from './ContactMap';
+export type { ContactMapProps } from './ContactMap';

@@ -33,3 +33,14 @@ export const Centered: Story = {
     ctaHref: '#',
   },
 };
+
+export const Video: Story = {
+  args: {
+    variant: 'video',
+    heading: 'A calm, confident introduction',
+    subheading: 'Service A | Service B | Service C',
+    posterSrc: 'https://placehold.co/1600x900',
+    ctaText: 'Get in touch',
+    ctaHref: '#',
+  },
+};
