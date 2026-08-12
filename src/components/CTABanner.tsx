@@ -1,5 +1,3 @@
-import './CTABanner.css';
-
 export interface CTABannerProps {
   variant?: 'centered' | 'split';
   heading: string;

@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import './Carousel.css';
 
 export interface CarouselSlide {
   /** Quote text — used by the "quotes" variant. */

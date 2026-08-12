@@ -1,5 +1,3 @@
-import './Hero.css';
-
 export interface HeroProps {
   variant?: 'centered' | 'split';
   eyebrow?: string;

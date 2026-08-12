@@ -1,6 +1,7 @@
 import type { Preview } from '@storybook/react-vite'
 import type { ReactNode } from 'react'
 import './preview-tokens.css'
+import '../src/styles.css'
 
 // Blocks are designed to sit inside a client site's own page container
 // (max-width + padding). Storybook has no such wrapper by default, so we

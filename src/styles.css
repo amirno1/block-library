@@ -1,0 +1,10 @@
+/* Import this once at your app's top level (e.g. app/layout.tsx via
+   `import 'block-library/styles.css'`) — not per-component. Components no
+   longer side-effect-import their own CSS: a component reached only
+   through a Server Component import chain can't reliably pull in CSS from
+   a third-party package under Turbopack, so styles are aggregated here and
+   loaded the same way globals.css is. */
+@import './components/Hero.css';
+@import './components/Carousel.css';
+@import './components/FeatureGrid.css';
+@import './components/CTABanner.css';
