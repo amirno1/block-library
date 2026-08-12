@@ -5,6 +5,9 @@
   align-items: stretch;
 }
 
+.bl-contact-info {
+  padding: 0 var(--content-padding, 20px);
+}
 .bl-contact-eyebrow {
   display: inline-block;
   font-family: var(--font-body, sans-serif);

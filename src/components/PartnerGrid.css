@@ -11,6 +11,9 @@
   direction: ltr;
 }
 
+.bl-partners-text {
+  padding: 0 var(--content-padding, 20px);
+}
 .bl-partners-heading {
   font-family: var(--font-heading, sans-serif);
   font-size: var(--fs-h2, 2.25rem);

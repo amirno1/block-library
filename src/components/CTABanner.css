@@ -94,7 +94,9 @@
   justify-content: center;
   align-items: flex-start;
   gap: var(--space-3, 1.5rem);
-  padding: var(--space-6, 4rem);
+  /* Horizontal inset is the text gutter, not the vertical rhythm — image
+     side stays at 0 padding, full-bleed to the viewport edge. */
+  padding: var(--space-6, 4rem) var(--content-padding, 20px);
 }
 .bl-cta-image-panel .bl-cta-heading,
 .bl-cta-image-panel .bl-cta-description {

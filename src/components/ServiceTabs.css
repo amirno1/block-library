@@ -1,6 +1,7 @@
 .bl-service-tabs-head {
   max-width: 640px;
   margin: 0 auto var(--space-5, 3rem);
+  padding: 0 var(--content-padding, 20px);
   text-align: center;
 }
 .bl-service-tabs-eyebrow {
@@ -34,6 +35,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-1, 0.5rem);
+  padding: 0 var(--content-padding, 20px);
 }
 .bl-service-tabs-item {
   display: flex;
