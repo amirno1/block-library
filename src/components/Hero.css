@@ -1,0 +1,95 @@
+/* Reads client design tokens (--color-*, --font-*, --space-*, etc.) defined
+   in the consuming site's own globals.css — see block-library's README for
+   the full token contract this library assumes exists. */
+
+.bl-hero {
+  padding: var(--space-7, 6rem) 0 var(--space-6, 4rem);
+  display: grid;
+  gap: var(--space-6, 4rem);
+  align-items: center;
+}
+
+.bl-hero--split {
+  grid-template-columns: 1.1fr 0.9fr;
+}
+
+.bl-hero--centered {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.bl-hero-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-small, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark, var(--color-primary, #333));
+  margin-bottom: var(--space-1, 0.5rem);
+}
+
+.bl-hero-heading {
+  font-family: var(--font-heading, sans-serif);
+  font-size: var(--fs-h1, 3rem);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-2, 1rem);
+}
+
+.bl-hero-subheading {
+  font-size: var(--fs-h5, 1.125rem);
+  color: var(--color-text-muted, #666);
+  max-width: 60ch;
+  margin: 0 0 var(--space-4, 2rem);
+}
+
+.bl-hero--centered .bl-hero-subheading {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.bl-hero-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  background: var(--color-primary, #1a1a1a);
+  color: var(--color-text-inverse, #fff);
+  font-family: var(--font-body, sans-serif);
+  font-weight: 600;
+  text-decoration: none;
+}
+.bl-hero-cta:hover {
+  background: var(--color-primary-dark, #000);
+}
+
+.bl-hero-media {
+  border-radius: var(--radius-lg, 24px);
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  background: var(--color-surface-alt, #f0f0f0);
+  box-shadow: var(--shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.14));
+}
+.bl-hero-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .bl-hero--split {
+    grid-template-columns: 1fr;
+  }
+  .bl-hero-media {
+    order: -1;
+    aspect-ratio: 16 / 10;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}

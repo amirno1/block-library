@@ -1,98 +1,73 @@
 # block-library
 
-Shared, versioned library of page-builder blocks — Sanity schema +
-matching React component, bundled together per block. Every client site
-(built from `client-site-template`) depends on this as a real package, so
-improving a block once makes it available everywhere.
+Shared, versioned library of React block components (Hero, Carousel, etc.),
+each with multiple variants. Used across every client site built from
+`client-site-template`.
 
-This is **not** tied to any client. Nothing client-specific belongs here —
-if it's specific to one site's copy or branding, it belongs in that site's
-own project, not here.
+**Layout lives in code, not in Sanity.** A client's page is composed by
+writing React — `<Hero variant="split" heading={...} />` — directly in that
+client's `site/` project. This library only supplies the components; it
+does not touch Sanity at all. Clients get Editor access to Sanity for
+content (text/images/video) and never see or touch layout, because layout
+isn't a Sanity-editable thing in the first place.
 
-## The convention: one block, one `variant` field
-
-Don't create a separate schema type per visual variation (`heroCentered`,
-`heroSplit`, ...). Create **one** type per block family, with a `variant`
-field selecting the look. This keeps Studio's "add block" list short and
-keeps all a block's variations discoverable in one place.
-
-Worked example — adding a `carousel` block with two variants:
-
-**`src/schema/carousel.ts`**
-```ts
-import { defineField, defineType } from 'sanity';
-
-export const carousel = defineType({
-  name: 'carousel',
-  title: 'Carousel',
-  type: 'object',
-  fields: [
-    defineField({
-      name: 'variant',
-      title: 'Style',
-      type: 'string',
-      options: { list: ['quotes', 'images'] },
-      initialValue: 'quotes',
-    }),
-    defineField({
-      name: 'slides',
-      title: 'Slides',
-      type: 'array',
-      of: [{ type: 'object', fields: [
-        defineField({ name: 'text', type: 'text' }),
-        defineField({ name: 'attribution', type: 'string' }),
-      ] }],
-    }),
-  ],
-});
+Browse everything visually with Storybook:
 ```
-
-**`src/components/Carousel.tsx`**
-```tsx
-export default function Carousel({ block }: { block: any }) {
-  switch (block.variant) {
-    case 'images':
-      return <ImageCarousel slides={block.slides} />;
-    default:
-      return <QuoteCarousel slides={block.slides} />;
-  }
-}
+npm install
+npm run storybook
 ```
+Opens `http://localhost:6006` — every block and every variant, rendered.
 
-Then register both in `src/schema/index.ts` and `src/components/index.ts`.
+## The convention
+
+One component per block family, one `variant` prop for its different looks
+— not a separate component per variant. See `src/components/Hero.tsx` /
+`Hero.stories.tsx` for the reference example.
+
+- Component + its CSS live together: `Block.tsx`, `Block.css`
+- CSS is scoped with a `bl-` prefix (`.bl-hero`, `.bl-hero-media`, ...) to
+  avoid colliding with a client site's own classes
+- Styling reads from **design tokens** (CSS custom properties) that every
+  client site's `globals.css` defines — `--color-primary`, `--font-heading`,
+  `--space-4`, etc. Don't hardcode colors/fonts/spacing; read the token.
+  This is the contract that makes one component look right across every
+  client's different theme.
+- One `.stories.tsx` file per block, one story per variant, using
+  realistic placeholder content (not "Lorem ipsum" — real-looking headline
+  length, etc.) so it's actually useful to browse.
+
+## Adding a block
+
+1. `src/components/YourBlock.tsx` + `YourBlock.css`
+2. `src/components/YourBlock.stories.tsx` — a story per variant
+3. Export it from `src/components/index.ts`
+4. `npm run storybook` and check it renders correctly
 
 ## Publishing an update
 
 ```
 npm run build
-git add -A && git commit -m "Add carousel block"
-git tag v0.2.0
-git push && git push --tags
+git add -A && git commit -m "Add YourBlock"
+git push
 ```
+No registry, no version pinning required by default — client projects
+depend on `github:<you>/block-library` and get the latest on `npm install`.
+Tag a release (`git tag vX.Y.Z && git push --tags`) if you want a specific
+client pinned to a specific version instead.
 
-## Consuming this from a client project
+## Using a block in a client project
 
-Install it (no npm registry needed — installs straight from GitHub):
+In the client's `site/` project:
+```tsx
+import { Hero } from 'block-library/components';
+
+<Hero
+  variant="split"
+  heading="..."
+  subheading="..."
+  imageSrc={urlFor(content.heroImage).width(640).height(800).url()}
+/>
 ```
-npm install github:<you>/block-library#v0.2.0
-```
-
-In `studio/schemaTypes/index.ts`:
-```ts
-import { blocks } from 'block-library/schema';
-export const schemaTypes = [page, post, ...blocks];
-```
-
-In `site/components/PageBuilder.tsx`, import the components you want from
-`block-library/components` and add a `case` for each `_type`.
-
-To pick up a newer version later: bump the version in `package.json`
-(`npm install github:<you>/block-library#v0.3.0`) — deliberate, not automatic.
-
-## Moving a block from a client project into this library
-
-Happens when something built for one client turns out to be worth reusing.
-The usual flow: point out the component in the client project and which
-block family/variant it should become, and it gets adapted here (parameterized,
-client-specific copy/styling stripped out, given a `variant` name) and
-published as a new version.
+Content (`heading`, `imageSrc`, etc.) comes from that client's Sanity
+document fields — plain fields, not a blocks array. See
+`client-site-template`'s README for the full page-composition pattern.

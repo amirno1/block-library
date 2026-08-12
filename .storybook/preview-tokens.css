@@ -1,0 +1,32 @@
+/* Sample design tokens so blocks render with realistic styling in
+   Storybook. Every real client site defines its own values for these same
+   variable names in its globals.css — this is just a stand-in so you can
+   see the shape of each block, not the final look for any specific client. */
+:root {
+  --color-bg: #ffffff;
+  --color-surface: #ffffff;
+  --color-surface-alt: #f5f5f5;
+  --color-border: #e2e2e2;
+  --color-primary: #1a1a1a;
+  --color-primary-dark: #000000;
+  --color-text: #1a1a1a;
+  --color-text-muted: #6b6b6b;
+  --color-text-inverse: #ffffff;
+  --color-accent-dark: #38447f;
+  --font-heading: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-small: 0.875rem;
+  --fs-h5: 1.125rem;
+  --fs-h1: 3rem;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-4: 2rem;
+  --space-6: 4rem;
+  --space-7: 6rem;
+  --radius-lg: 24px;
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.14);
+}
+body {
+  margin: 0;
+  font-family: var(--font-body);
+}

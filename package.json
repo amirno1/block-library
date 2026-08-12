@@ -1,32 +1,43 @@
 {
   "name": "block-library",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
-  "description": "Shared, versioned library of reusable page-builder blocks (Sanity schema + React components) used across client sites.",
+  "description": "Shared, versioned library of reusable React block components (Hero, Carousel, etc.), each with multiple variants, used across client sites. Layout composition happens in each client's code, not in Sanity — this library supplies the building blocks.",
   "type": "module",
   "scripts": {
-    "build": "tsc",
-    "prepare": "npm run build"
+    "build": "node scripts/build.mjs",
+    "prepare": "npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "exports": {
-    "./schema": {
-      "types": "./dist/schema/index.d.ts",
-      "default": "./dist/schema/index.js"
-    },
     "./components": {
       "types": "./dist/components/index.d.ts",
       "default": "./dist/components/index.js"
     }
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "peerDependencies": {
-    "react": ">=19",
-    "sanity": ">=6"
+    "react": ">=19"
   },
   "dependencies": {
     "@types/react": "^19",
     "react": "^19",
-    "sanity": "^6.7.0",
     "typescript": "^5"
+  },
+  "devDependencies": {
+    "storybook": "^10.5.7",
+    "@storybook/react-vite": "^10.5.7",
+    "@chromatic-com/storybook": "latest",
+    "@storybook/addon-vitest": "^10.5.7",
+    "@storybook/addon-a11y": "^10.5.7",
+    "@storybook/addon-docs": "^10.5.7",
+    "@storybook/addon-mcp": "latest",
+    "vitest": "latest",
+    "playwright": "latest",
+    "@vitest/browser-playwright": "latest",
+    "@vitest/coverage-v8": "latest"
   }
 }
