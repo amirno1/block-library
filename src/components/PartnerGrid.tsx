@@ -6,6 +6,7 @@ export interface Partner {
 }
 
 export interface PartnerGridProps {
+  eyebrow?: string;
   heading?: string;
   body?: string;
   /** Which side the heading/body text sits on; logos fill the other side. */
@@ -13,12 +14,13 @@ export interface PartnerGridProps {
   partners: Partner[];
 }
 
-export default function PartnerGrid({ heading, body, textPosition = 'left', partners }: PartnerGridProps) {
+export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'left', partners }: PartnerGridProps) {
   const paragraphs = body ? body.split('\n\n') : [];
 
   return (
     <section className={`bl-partners bl-partners--text-${textPosition}`}>
       <div className="bl-partners-text">
+        {eyebrow && <span className="bl-partners-eyebrow">{eyebrow}</span>}
         {heading && <h2 className="bl-partners-heading">{heading}</h2>}
         {paragraphs.map((paragraph, i) => (
           <p key={i} className="bl-partners-paragraph">
