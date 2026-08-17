@@ -13,12 +13,6 @@
   grid-template-columns: 1.1fr 0.9fr;
 }
 
-.bl-hero--centered {
-  text-align: center;
-  max-width: 720px;
-  margin: 0 auto;
-}
-
 .bl-hero-eyebrow {
   display: inline-block;
   font-family: var(--font-body, sans-serif);
@@ -44,11 +38,6 @@
   color: var(--color-text-muted, #666);
   max-width: 60ch;
   margin: 0 0 var(--space-4, 2rem);
-}
-
-.bl-hero--centered .bl-hero-subheading {
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .bl-hero-cta {
@@ -82,55 +71,95 @@
   display: block;
 }
 
-.bl-hero--video {
+/* variant="full" — fills the viewport on load (100dvh), scroll moves past
+   it. Background is either a video or a static image (whichever src is
+   given — video wins if both are); text position is configurable. */
+.bl-hero--full {
   position: relative;
-  min-height: 640px;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
-  justify-content: center;
-  text-align: center;
-  border-radius: var(--radius-lg, 24px);
   overflow: hidden;
-  /* Vertical breathing room stays generous; horizontal is 0 so the video
-     reaches the true viewport edge — .bl-hero-copy carries its own
-     horizontal padding instead, so only the text is inset. */
-  padding: var(--space-6, 4rem) 0;
+  padding: 0;
 }
-.bl-hero-video-bg {
+.bl-hero-full-bg {
   position: absolute;
   inset: 0;
   z-index: 0;
 }
-.bl-hero-video-bg video,
-.bl-hero-video-bg img {
+.bl-hero-full-bg video,
+.bl-hero-full-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
-.bl-hero-video-scrim {
+.bl-hero-full-scrim {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.55));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5));
 }
-.bl-hero--video .bl-hero-copy {
+
+.bl-hero-full-copy {
   position: relative;
   z-index: 1;
-  max-width: 720px;
-  padding: 0 var(--content-padding, 20px);
+  width: 100%;
+  padding: var(--space-6, 4rem) var(--content-padding, 20px);
+  display: flex;
+  flex-direction: column;
 }
-.bl-hero--video .bl-hero-heading,
-.bl-hero--video .bl-hero-subheading {
+.bl-hero-full-copy .bl-hero-heading,
+.bl-hero-full-copy .bl-hero-subheading {
   color: var(--color-text-inverse, #fff);
 }
-.bl-hero--video .bl-hero-subheading {
+
+.bl-hero-full-copy--center {
+  align-items: center;
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.bl-hero-full-copy--center .bl-hero-subheading {
   margin-left: auto;
   margin-right: auto;
 }
 
-@media (max-width: 640px) {
-  .bl-hero--video {
-    min-height: 480px;
+.bl-hero-full-copy--left {
+  align-items: flex-start;
+  text-align: left;
+  max-width: 640px;
+}
+
+.bl-hero-full-copy--right {
+  align-items: flex-end;
+  text-align: right;
+  max-width: 640px;
+  margin-left: auto;
+}
+
+.bl-hero-full-copy--split {
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5, 3rem);
+  max-width: none;
+}
+.bl-hero-full-primary,
+.bl-hero-full-secondary {
+  text-align: left;
+}
+.bl-hero-full-primary {
+  flex: 1 1 55%;
+}
+.bl-hero-full-secondary {
+  flex: 1 1 35%;
+}
+
+@media (max-width: 720px) {
+  .bl-hero-full-copy--split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2, 1rem);
   }
 }
 
