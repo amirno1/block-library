@@ -59,7 +59,7 @@
 
 /* --- split (default): full-bleed image half, text half ------------------ */
 .bl-about--split {
-  grid-template-columns: 0.8fr 1.2fr;
+  grid-template-columns: 1fr 1fr;
   padding: var(--space-7, 5rem) 0;
 }
 .bl-about--split .bl-about-media {
