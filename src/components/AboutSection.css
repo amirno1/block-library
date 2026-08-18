@@ -1,0 +1,155 @@
+.bl-about {
+  display: grid;
+  gap: var(--space-6, 4rem);
+  align-items: center;
+}
+
+.bl-about-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-small, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent-dark, var(--color-primary, #333));
+  margin-bottom: var(--space-1, 0.5rem);
+}
+.bl-about-heading {
+  font-family: var(--font-heading, sans-serif);
+  font-size: var(--fs-h2, 2rem);
+  font-weight: 600;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-3, 1.25rem);
+}
+.bl-about-paragraph {
+  color: var(--color-text-muted, #666);
+  line-height: 1.7;
+  margin: 0 0 var(--space-2, 1rem);
+}
+.bl-about-credentials {
+  list-style: none;
+  margin: var(--space-3, 1.25rem) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1, 0.5rem) var(--space-3, 1.25rem);
+}
+.bl-about-credentials li {
+  font-size: var(--fs-small, 0.875rem);
+  font-weight: 600;
+  color: var(--color-primary-dark, var(--color-text, #1a1a1a));
+}
+.bl-about-credentials li::before {
+  content: '•';
+  margin-right: 0.4em;
+  color: var(--color-accent, currentColor);
+}
+
+.bl-about-media {
+  overflow: hidden;
+  background: var(--color-surface-alt, #f0f0f0);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+}
+.bl-about-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* --- split (default): full-bleed image half, text half ------------------ */
+.bl-about--split {
+  grid-template-columns: 0.8fr 1.2fr;
+  padding: var(--space-7, 5rem) 0;
+}
+.bl-about--split .bl-about-media {
+  order: 1;
+  aspect-ratio: 3 / 4;
+  height: 100%;
+}
+.bl-about--split .bl-about-copy {
+  order: 2;
+  padding: 0 var(--content-padding, 20px);
+}
+.bl-about--split.bl-about--image-right .bl-about-media {
+  order: 2;
+}
+.bl-about--split.bl-about--image-right .bl-about-copy {
+  order: 1;
+}
+
+@media (max-width: 860px) {
+  .bl-about--split {
+    grid-template-columns: 1fr;
+  }
+  .bl-about--split .bl-about-media {
+    order: -1 !important;
+    aspect-ratio: 16 / 10;
+  }
+  .bl-about--split .bl-about-copy {
+    order: 0 !important;
+  }
+}
+
+/* --- stacked: full-bleed image on top, centered text below -------------- */
+.bl-about--stacked {
+  grid-template-columns: 1fr;
+  gap: var(--space-5, 3rem);
+  padding: var(--space-7, 5rem) 0;
+}
+.bl-about--stacked .bl-about-media {
+  aspect-ratio: 21 / 9;
+}
+.bl-about--stacked .bl-about-copy {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 var(--content-padding, 20px);
+  text-align: center;
+}
+.bl-about--stacked .bl-about-credentials {
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .bl-about--stacked .bl-about-media {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+/* --- overlap: text card overlaps the image's bottom edge ---------------- */
+.bl-about--overlap {
+  display: block;
+  position: relative;
+}
+.bl-about--overlap .bl-about-media {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  height: auto;
+}
+.bl-about-overlap-card {
+  position: relative;
+  z-index: 1;
+  margin-top: calc(-1 * var(--space-6, 4rem));
+  max-width: 560px;
+  background: var(--color-surface, #fff);
+  box-shadow: var(--shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.14));
+  padding: var(--space-5, 3rem);
+}
+.bl-about--overlap.bl-about--image-left .bl-about-overlap-card {
+  margin-left: var(--content-padding, 20px);
+  margin-right: auto;
+}
+.bl-about--overlap.bl-about--image-right .bl-about-overlap-card {
+  margin-right: var(--content-padding, 20px);
+  margin-left: auto;
+}
+
+@media (max-width: 720px) {
+  .bl-about-overlap-card {
+    margin-top: calc(-1 * var(--space-4, 2rem));
+    margin-left: var(--content-padding, 20px);
+    margin-right: var(--content-padding, 20px);
+    max-width: none;
+    padding: var(--space-4, 2rem);
+  }
+}
