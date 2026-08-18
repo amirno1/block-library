@@ -79,6 +79,13 @@
 .bl-cta-image {
   background: var(--color-surface-alt, #f0f0f0);
 }
+/* Small stagger so the panel reads as following the image in, rather
+   than both pieces landing in the same instant. Only sets the delay —
+   the transition property/duration itself comes from the site's own
+   .bl-reveal rule, so this doesn't need to know those values. */
+.bl-cta-image-panel.bl-reveal {
+  transition-delay: 150ms;
+}
 .bl-cta-image img {
   width: 100%;
   height: 100%;

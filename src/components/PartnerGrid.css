@@ -43,21 +43,14 @@
   gap: var(--space-5, 3rem);
 }
 .bl-partners-cell {
-  /* No background/border/shadow — the cell is meant to be invisible, so
-     the logo appears to sit directly on the section's own surface rather
-     than inside a card. The mask fades each logo's edges to transparent
-     (not filter:blur, which would smear the logo itself into mush) so it
-     reads as etched/sketched into the background instead of pasted on
-     top of it. Works best when the section background behind this grid
-     is a flat, unbroken color with nothing else showing through. */
-  background: transparent;
+  background: var(--color-surface, #fff);
+  border: 1px solid var(--color-border, #e2e2e2);
+  border-radius: var(--radius-md, 16px);
   aspect-ratio: 4 / 3;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-3, 1.5rem);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 55%, transparent 100%);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, #000 55%, transparent 100%);
 }
 .bl-partners-cell img {
   max-width: 100%;

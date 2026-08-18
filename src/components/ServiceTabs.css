@@ -88,12 +88,17 @@
 }
 
 .bl-service-tabs-media {
+  /* No background/border/shadow — meant to sit directly on the section's
+     own flat background, not inside a card. The mask fades the photo's
+     edges to transparent (not filter:blur, which would smear the photo
+     itself into mush) so the active image reads as sketched into the
+     surface rather than pasted on top of it. Pairs with a flat, unbroken
+     section background — see bg-diensten in the consuming site's CSS. */
   position: relative;
-  border-radius: var(--radius-lg, 24px);
-  overflow: hidden;
   aspect-ratio: 4 / 3;
-  background: var(--color-surface-alt, #f0f0f0);
-  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+  background: transparent;
+  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
 }
 .bl-service-tabs-media img {
   position: absolute;
