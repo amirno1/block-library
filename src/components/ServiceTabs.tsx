@@ -49,7 +49,7 @@ export default function ServiceTabs({ eyebrow, heading, description, items }: Se
         </div>
         {active?.imageSrc && (
           <div className="bl-service-tabs-media">
-            <img src={active.imageSrc} alt={active.imageAlt || ''} />
+            <img src={active.imageSrc} alt={active.imageAlt || ''} loading="lazy" decoding="async" />
           </div>
         )}
       </div>

@@ -23,7 +23,7 @@ export default function CTABanner({
       <div className="bl-cta bl-cta--image">
         {imageSrc && (
           <div className="bl-cta-image">
-            <img src={imageSrc} alt={imageAlt || ''} />
+            <img src={imageSrc} alt={imageAlt || ''} loading="lazy" decoding="async" />
           </div>
         )}
         <div className="bl-cta-image-panel">

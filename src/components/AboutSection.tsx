@@ -45,7 +45,7 @@ export default function AboutSection({
 
   const media = imageSrc && (
     <div className="bl-about-media">
-      <img src={imageSrc} alt={imageAlt || ''} />
+      <img src={imageSrc} alt={imageAlt || ''} loading="lazy" decoding="async" />
     </div>
   );
 

@@ -30,7 +30,9 @@ export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'le
       </div>
       <div className="bl-partners-grid">
         {partners.map((partner) => {
-          const logo = partner.logoSrc && <img src={partner.logoSrc} alt={partner.logoAlt || partner.name} />;
+          const logo = partner.logoSrc && (
+            <img src={partner.logoSrc} alt={partner.logoAlt || partner.name} loading="lazy" decoding="async" />
+          );
           return (
             <div className="bl-partners-cell" key={partner.name}>
               {partner.href ? (

@@ -65,7 +65,7 @@ export default function Carousel({ variant = 'quotes', slides, autoAdvanceMs = 6
               </>
             ) : (
               <figure className="bl-carousel-figure">
-                <img src={slide.imageSrc} alt={slide.imageAlt || ''} />
+                <img src={slide.imageSrc} alt={slide.imageAlt || ''} loading="lazy" decoding="async" />
                 {slide.caption && <figcaption>{slide.caption}</figcaption>}
               </figure>
             )}
