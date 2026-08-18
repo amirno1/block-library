@@ -100,6 +100,42 @@
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5));
 }
 
+.bl-hero-scroll-hint {
+  position: absolute;
+  z-index: 1;
+  bottom: var(--space-4, 2rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-inverse, #fff);
+  opacity: 0.85;
+  cursor: pointer;
+  animation: bl-hero-scroll-bounce 1.8s ease-in-out infinite;
+}
+.bl-hero-scroll-hint:hover {
+  opacity: 1;
+}
+.bl-hero-scroll-hint svg {
+  width: 28px;
+  height: 28px;
+}
+@keyframes bl-hero-scroll-bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bl-hero-scroll-hint {
+    animation: none;
+  }
+}
+
 .bl-hero-full-copy {
   position: relative;
   z-index: 1;

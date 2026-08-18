@@ -36,6 +36,14 @@ export const FullCentered: Story = {
   },
 };
 
+export const FullWithScrollHint: Story = {
+  name: 'Full — with scroll-down hint',
+  args: {
+    ...FullCentered.args,
+    scrollHint: true,
+  },
+};
+
 export const FullLeftVideo: Story = {
   name: 'Full — left-aligned text, video background',
   args: {

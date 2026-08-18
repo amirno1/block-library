@@ -1,3 +1,5 @@
+'use client';
+
 export interface HeroProps {
   variant?: 'split' | 'full';
   eyebrow?: string;
@@ -14,6 +16,8 @@ export interface HeroProps {
   posterSrc?: string;
   /** variant="full" only — where the copy sits over the background. Defaults to 'center'. */
   textPosition?: 'center' | 'left' | 'right' | 'split';
+  /** variant="full" only — bouncing "scroll down" chevron pinned to the bottom, clicking scrolls one viewport height. */
+  scrollHint?: boolean;
 }
 
 export default function Hero({
@@ -28,6 +32,7 @@ export default function Hero({
   videoSrc,
   posterSrc,
   textPosition = 'center',
+  scrollHint = false,
 }: HeroProps) {
   if (variant === 'full') {
     const copy =
@@ -72,6 +77,18 @@ export default function Hero({
           <div className="bl-hero-full-scrim" />
         </div>
         <div className={`bl-hero-full-copy bl-hero-full-copy--${textPosition}`}>{copy}</div>
+        {scrollHint && (
+          <button
+            type="button"
+            className="bl-hero-scroll-hint"
+            aria-label="Scroll down"
+            onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="6 9 12 15 18 9" />
+            </svg>
+          </button>
+        )}
       </section>
     );
   }
