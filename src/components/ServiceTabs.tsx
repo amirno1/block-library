@@ -18,7 +18,7 @@ export interface ServiceTabsProps {
 
 export default function ServiceTabs({ eyebrow, heading, description, items }: ServiceTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const active = items[activeIndex];
+  const hasImages = items.some((item) => item.imageSrc);
 
   return (
     <section className="bl-service-tabs">
@@ -31,25 +31,44 @@ export default function ServiceTabs({ eyebrow, heading, description, items }: Se
       )}
       <div className="bl-service-tabs-grid">
         <div className="bl-service-tabs-list" role="tablist">
-          {items.map((item, i) => (
-            <button
-              key={item.title}
-              type="button"
-              role="tab"
-              aria-selected={i === activeIndex}
-              className={`bl-service-tabs-item ${i === activeIndex ? 'is-active' : ''}`}
-              onClick={() => setActiveIndex(i)}
-            >
-              <span className="bl-service-tabs-item-title">{item.title}</span>
-              {i === activeIndex && item.description && (
-                <span className="bl-service-tabs-item-description">{item.description}</span>
-              )}
-            </button>
-          ))}
+          {items.map((item, i) => {
+            const isActive = i === activeIndex;
+            return (
+              <button
+                key={item.title}
+                type="button"
+                role="tab"
+                aria-selected={isActive}
+                className={`bl-service-tabs-item ${isActive ? 'is-active' : ''}`}
+                onClick={() => setActiveIndex(i)}
+              >
+                <span className="bl-service-tabs-item-title">{item.title}</span>
+                {item.description && (
+                  <span className="bl-service-tabs-item-collapse">
+                    <span className="bl-service-tabs-item-collapse-inner">
+                      <span className="bl-service-tabs-item-description">{item.description}</span>
+                    </span>
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
-        {active?.imageSrc && (
+        {hasImages && (
           <div className="bl-service-tabs-media">
-            <img src={active.imageSrc} alt={active.imageAlt || ''} loading="lazy" decoding="async" />
+            {items.map(
+              (item, i) =>
+                item.imageSrc && (
+                  <img
+                    key={item.title}
+                    src={item.imageSrc}
+                    alt={item.imageAlt || ''}
+                    className={i === activeIndex ? 'is-active' : ''}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ),
+            )}
           </div>
         )}
       </div>

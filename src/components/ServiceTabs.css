@@ -41,7 +41,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.4rem;
   text-align: left;
   width: 100%;
   border: 1px solid var(--color-border, #e2e2e2);
@@ -50,7 +49,7 @@
   padding: var(--space-3, 1.5rem);
   cursor: pointer;
   font-family: var(--font-body, sans-serif);
-  transition: border-color 150ms ease, background-color 150ms ease;
+  transition: border-color 200ms var(--ease-out, ease), background-color 200ms var(--ease-out, ease);
 }
 .bl-service-tabs-item:hover {
   border-color: var(--color-primary, #333);
@@ -65,12 +64,31 @@
   font-size: var(--fs-h5, 1.125rem);
   color: var(--color-text, #1a1a1a);
 }
+
+/* Smooth expand/collapse without knowing the content's height ahead of
+   time: the row track itself animates between 0fr and 1fr, and the inner
+   wrapper clips anything that would otherwise overflow while collapsed. */
+.bl-service-tabs-item-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  width: 100%;
+  transition: grid-template-rows 350ms var(--ease-out, ease);
+}
+.bl-service-tabs-item.is-active .bl-service-tabs-item-collapse {
+  grid-template-rows: 1fr;
+}
+.bl-service-tabs-item-collapse-inner {
+  overflow: hidden;
+}
 .bl-service-tabs-item-description {
+  display: block;
+  padding-top: 0.5rem;
   font-size: var(--fs-small, 0.875rem);
   color: var(--color-text-muted, #666);
 }
 
 .bl-service-tabs-media {
+  position: relative;
   border-radius: var(--radius-lg, 24px);
   overflow: hidden;
   aspect-ratio: 4 / 3;
@@ -78,10 +96,17 @@
   box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
 }
 .bl-service-tabs-media img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  opacity: 0;
+  transition: opacity 450ms var(--ease-out, ease);
+}
+.bl-service-tabs-media img.is-active {
+  opacity: 1;
 }
 
 @media (max-width: 860px) {
