@@ -151,6 +151,23 @@
   color: var(--color-text-inverse, #fff);
 }
 
+.bl-hero-quote {
+  margin: var(--space-4, 2rem) 0 0;
+  font-style: italic;
+  font-size: var(--fs-body, 1rem);
+  color: var(--color-text-inverse, #fff);
+  opacity: 0.85;
+}
+.bl-hero-quote-attribution {
+  display: block;
+  margin-top: 0.35rem;
+  font-style: normal;
+  font-size: var(--fs-small, 0.8125rem);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.8;
+}
+
 .bl-hero-full-copy--center {
   align-items: center;
   text-align: center;

@@ -36,6 +36,15 @@ export const FullCentered: Story = {
   },
 };
 
+export const FullWithQuote: Story = {
+  name: 'Full — with motto/quote',
+  args: {
+    ...FullCentered.args,
+    quote: 'We believe growth starts with a single honest conversation.',
+    quoteAttribution: 'Company motto',
+  },
+};
+
 export const FullWithScrollHint: Story = {
   name: 'Full — with scroll-down hint',
   args: {

@@ -18,6 +18,9 @@ export interface HeroProps {
   textPosition?: 'center' | 'left' | 'right' | 'split';
   /** variant="full" only — bouncing "scroll down" chevron pinned to the bottom, clicking scrolls one viewport height. */
   scrollHint?: boolean;
+  /** variant="full" only — short motto/tagline rendered below the CTA, styled light to match the rest of the hero copy. */
+  quote?: string;
+  quoteAttribution?: string;
 }
 
 export default function Hero({
@@ -33,8 +36,17 @@ export default function Hero({
   posterSrc,
   textPosition = 'center',
   scrollHint = false,
+  quote,
+  quoteAttribution,
 }: HeroProps) {
   if (variant === 'full') {
+    const quoteBlock = quote && (
+      <p className="bl-hero-quote">
+        {quote}
+        {quoteAttribution && <span className="bl-hero-quote-attribution">{quoteAttribution}</span>}
+      </p>
+    );
+
     const copy =
       textPosition === 'split' ? (
         <>
@@ -49,6 +61,7 @@ export default function Hero({
                 {ctaText}
               </a>
             )}
+            {quoteBlock}
           </div>
         </>
       ) : (
@@ -61,6 +74,7 @@ export default function Hero({
               {ctaText}
             </a>
           )}
+          {quoteBlock}
         </>
       );
 
