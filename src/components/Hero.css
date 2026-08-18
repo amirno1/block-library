@@ -103,7 +103,9 @@
 .bl-hero-scroll-hint {
   position: absolute;
   z-index: 1;
-  bottom: var(--space-4, 2rem);
+  /* Clears the bottom edge with room for the bounce travel itself, plus
+     mobile browser chrome / safe-area insets that can eat into 100dvh. */
+  bottom: max(var(--space-6, 4rem), env(safe-area-inset-bottom, 0px) + var(--space-5, 3rem));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
