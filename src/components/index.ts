@@ -27,3 +27,6 @@ export type { ContactMapProps } from './ContactMap';
 
 export { default as AboutSection } from './AboutSection';
 export type { AboutSectionProps } from './AboutSection';
+
+export { default as Quote } from './Quote';
+export type { QuoteProps } from './Quote';

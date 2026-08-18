@@ -1,0 +1,30 @@
+.bl-quote {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--content-padding, 20px);
+}
+.bl-quote-text {
+  font-family: var(--bl-quote-font, var(--font-heading, serif));
+  font-size: var(--bl-quote-size, var(--fs-h2, 2.25rem));
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-text, #1a1a1a);
+  margin: 0 0 var(--space-3, 1.5rem);
+}
+.bl-quote-text::before {
+  content: '\201C';
+}
+.bl-quote-text::after {
+  content: '\201D';
+}
+.bl-quote-attribution {
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-small, 0.875rem);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-muted, #666);
+  margin: 0;
+}
