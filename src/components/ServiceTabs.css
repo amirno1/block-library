@@ -72,7 +72,7 @@
   display: grid;
   grid-template-rows: 0fr;
   width: 100%;
-  transition: grid-template-rows 350ms var(--ease-out, ease);
+  transition: grid-template-rows 1000ms var(--ease-out, ease);
 }
 .bl-service-tabs-item.is-active .bl-service-tabs-item-collapse {
   grid-template-rows: 1fr;
@@ -103,7 +103,7 @@
   object-fit: cover;
   display: block;
   opacity: 0;
-  transition: opacity 450ms var(--ease-out, ease);
+  transition: opacity 1000ms var(--ease-out, ease);
 }
 .bl-service-tabs-media img.is-active {
   opacity: 1;
