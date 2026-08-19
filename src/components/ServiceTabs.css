@@ -55,7 +55,10 @@
   transition: box-shadow 400ms linear;
 }
 .bl-service-tabs-item:hover {
-  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.08));
+  /* --shadow-sm is tuned for elevation on top of other cards — too faint
+     to register at all against a flat section background, which is the
+     usual context here. This is deliberately stronger. */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
 }
 .bl-service-tabs-item.is-active {
   background: #F8EEE6;
