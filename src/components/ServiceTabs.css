@@ -93,8 +93,11 @@
   position: relative;
   aspect-ratio: 4 / 3;
   background: transparent;
-  -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
-  mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, #000 55%, transparent 100%);
+  /* Fade starts almost immediately and completes well before the edge —
+     a much larger transition band than a thin edge vignette, so it reads
+     clearly as a dissolve rather than something you have to look for. */
+  -webkit-mask-image: radial-gradient(ellipse 65% 65% at 50% 50%, #000 10%, transparent 90%);
+  mask-image: radial-gradient(ellipse 65% 65% at 50% 50%, #000 10%, transparent 90%);
 }
 .bl-service-tabs-media img {
   position: absolute;
