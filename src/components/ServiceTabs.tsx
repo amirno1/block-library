@@ -14,6 +14,8 @@ export interface ServiceTabsProps {
   heading?: string;
   description?: string;
   items: ServiceTabItem[];
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-service-tabs-heading-size': '3rem' }`. See ServiceTabs.css for the full list of --bl-service-tabs-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
 /** Appends a changing query param so the browser treats it as a fresh
@@ -26,7 +28,7 @@ function withRestartToken(src: string, token: number): string {
   return `${src}${src.includes('?') ? '&' : '?'}_r=${token}`;
 }
 
-export default function ServiceTabs({ eyebrow, heading, description, items }: ServiceTabsProps) {
+export default function ServiceTabs({ eyebrow, heading, description, items, style }: ServiceTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [restartToken, setRestartToken] = useState(0);
   const hasImages = items.some((item) => item.imageSrc);
@@ -37,7 +39,7 @@ export default function ServiceTabs({ eyebrow, heading, description, items }: Se
   };
 
   return (
-    <section className="bl-service-tabs">
+    <section className="bl-service-tabs" style={style}>
       {(eyebrow || heading || description) && (
         <div className="bl-service-tabs-head">
           {eyebrow && <span className="bl-service-tabs-eyebrow">{eyebrow}</span>}

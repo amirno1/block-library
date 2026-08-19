@@ -16,7 +16,7 @@
 .bl-hero-eyebrow {
   display: inline-block;
   font-family: var(--font-body, sans-serif);
-  font-size: var(--fs-small, 0.875rem);
+  font-size: var(--bl-hero-eyebrow-size, var(--fs-small, 0.875rem));
   font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -26,7 +26,7 @@
 
 .bl-hero-heading {
   font-family: var(--font-heading, sans-serif);
-  font-size: var(--fs-h1, 3rem);
+  font-size: var(--bl-hero-heading-size, var(--fs-h1, 3rem));
   font-weight: var(--font-weight-bold, 600);
   line-height: 1.2;
   color: var(--color-text, #1a1a1a);
@@ -34,7 +34,7 @@
 }
 
 .bl-hero-subheading {
-  font-size: var(--fs-h5, 1.125rem);
+  font-size: var(--bl-hero-subheading-size, var(--fs-h5, 1.125rem));
   color: var(--color-text-muted, #666);
   max-width: 60ch;
   margin: 0 0 var(--space-4, 2rem);
@@ -154,7 +154,7 @@
 .bl-hero-quote {
   margin: var(--space-4, 2rem) 0 0;
   font-style: italic;
-  font-size: var(--fs-body, 1rem);
+  font-size: var(--bl-hero-quote-size, var(--fs-body, 1rem));
   color: var(--color-text-inverse, #fff);
   opacity: 0.85;
 }
@@ -162,7 +162,7 @@
   display: block;
   margin-top: 0.35rem;
   font-style: normal;
-  font-size: var(--fs-small, 0.8125rem);
+  font-size: var(--bl-hero-quote-attribution-size, var(--fs-small, 0.8125rem));
   text-transform: uppercase;
   letter-spacing: 0.05em;
   opacity: 0.8;

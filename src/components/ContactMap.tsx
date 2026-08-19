@@ -7,6 +7,8 @@ export interface ContactMapProps {
   email?: string;
   /** Defaults to `address` — pass a more specific query if the map should center on something else. */
   mapQuery?: string;
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-contact-heading-size': '3rem' }`. See ContactMap.css for the full list of --bl-contact-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
 export default function ContactMap({
@@ -17,11 +19,12 @@ export default function ContactMap({
   phone,
   email,
   mapQuery,
+  style,
 }: ContactMapProps) {
   const query = mapQuery || address;
 
   return (
-    <section className="bl-contact">
+    <section className="bl-contact" style={style}>
       <div className="bl-contact-info">
         {eyebrow && <span className="bl-contact-eyebrow">{eyebrow}</span>}
         {heading && <h2 className="bl-contact-heading">{heading}</h2>}

@@ -12,11 +12,13 @@ export interface PricingTableProps {
   /** Column headers, in order — length should match the row shape (label, duration, price, note). */
   columns: string[];
   rows: PricingRow[];
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-pricing-heading-size': '3rem' }`. See PricingTable.css for the full list of --bl-pricing-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
-export default function PricingTable({ eyebrow, heading, description, columns, rows }: PricingTableProps) {
+export default function PricingTable({ eyebrow, heading, description, columns, rows, style }: PricingTableProps) {
   return (
-    <section className="bl-pricing">
+    <section className="bl-pricing" style={style}>
       {(eyebrow || heading || description) && (
         <div className="bl-pricing-head">
           {eyebrow && <span className="bl-pricing-eyebrow">{eyebrow}</span>}

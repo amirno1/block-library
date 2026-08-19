@@ -11,7 +11,7 @@
 .bl-contact-eyebrow {
   display: inline-block;
   font-family: var(--font-body, sans-serif);
-  font-size: var(--fs-small, 0.875rem);
+  font-size: var(--bl-contact-eyebrow-size, var(--fs-small, 0.875rem));
   font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -20,7 +20,7 @@
 }
 .bl-contact-heading {
   font-family: var(--font-heading, sans-serif);
-  font-size: var(--fs-h2, 2.25rem);
+  font-size: var(--bl-contact-heading-size, var(--fs-h2, 2.25rem));
   margin: 0 0 var(--space-2, 1rem);
 }
 .bl-contact-description {
@@ -34,7 +34,7 @@
   gap: var(--space-2, 1rem);
 }
 .bl-contact-details dt {
-  font-size: var(--fs-small, 0.8125rem);
+  font-size: var(--bl-contact-label-size, var(--fs-small, 0.8125rem));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--color-text-muted, #666);
@@ -42,7 +42,7 @@
 }
 .bl-contact-details dd {
   margin: 0;
-  font-size: var(--fs-h5, 1.0625rem);
+  font-size: var(--bl-contact-value-size, var(--fs-h5, 1.0625rem));
   color: var(--color-text, #1a1a1a);
 }
 .bl-contact-details a {

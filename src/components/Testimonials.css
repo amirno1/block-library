@@ -6,7 +6,7 @@
 .bl-testimonials-eyebrow {
   display: inline-block;
   font-family: var(--font-body, sans-serif);
-  font-size: var(--fs-small, 0.875rem);
+  font-size: var(--bl-testimonials-eyebrow-size, var(--fs-small, 0.875rem));
   font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -15,7 +15,7 @@
 }
 .bl-testimonials-heading {
   font-family: var(--font-heading, sans-serif);
-  font-size: var(--fs-h2, 2.25rem);
+  font-size: var(--bl-testimonials-heading-size, var(--fs-h2, 2.25rem));
   margin: 0;
 }
 
@@ -47,7 +47,7 @@
 .bl-testimonials-card blockquote {
   margin: 0;
   color: var(--color-text, #1a1a1a);
-  font-size: var(--fs-body, 1rem);
+  font-size: var(--bl-testimonials-quote-size, var(--fs-body, 1rem));
   line-height: 1.6;
 }
 .bl-testimonials-card figcaption {
@@ -57,10 +57,10 @@
 }
 .bl-testimonials-name {
   font-weight: var(--font-weight-bold, 600);
-  font-size: var(--fs-small, 0.875rem);
+  font-size: var(--bl-testimonials-name-size, var(--fs-small, 0.875rem));
   color: var(--color-text, #1a1a1a);
 }
 .bl-testimonials-role {
-  font-size: var(--fs-small, 0.8125rem);
+  font-size: var(--bl-testimonials-role-size, var(--fs-small, 0.8125rem));
   color: var(--color-text-muted, #666);
 }

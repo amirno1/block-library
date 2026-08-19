@@ -19,9 +19,11 @@ export interface CarouselProps {
   slides: CarouselSlide[];
   /** Milliseconds between auto-advance. Set to 0 to disable. */
   autoAdvanceMs?: number;
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-carousel-quote-text-size': '2rem' }`. See Carousel.css for the full list of --bl-carousel-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
-export default function Carousel({ variant = 'quotes', slides, autoAdvanceMs = 6000 }: CarouselProps) {
+export default function Carousel({ variant = 'quotes', slides, autoAdvanceMs = 6000, style }: CarouselProps) {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
   const count = slides.length;
@@ -47,6 +49,7 @@ export default function Carousel({ variant = 'quotes', slides, autoAdvanceMs = 6
   return (
     <div
       className={`bl-carousel bl-carousel--${variant}`}
+      style={style}
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}

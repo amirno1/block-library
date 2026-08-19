@@ -10,6 +10,8 @@ export interface AboutSectionProps {
   credentials?: string[];
   imageSrc?: string;
   imageAlt?: string;
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-about-heading-size': '3rem' }`. See AboutSection.css for the full list of --bl-about-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
 export default function AboutSection({
@@ -21,6 +23,7 @@ export default function AboutSection({
   credentials,
   imageSrc,
   imageAlt,
+  style,
 }: AboutSectionProps) {
   const paragraphs = body.split('\n\n');
 
@@ -51,7 +54,7 @@ export default function AboutSection({
 
   if (variant === 'stacked') {
     return (
-      <section className="bl-about bl-about--stacked">
+      <section className="bl-about bl-about--stacked" style={style}>
         {media}
         {copy}
       </section>
@@ -60,7 +63,7 @@ export default function AboutSection({
 
   if (variant === 'overlap') {
     return (
-      <section className={`bl-about bl-about--overlap bl-about--image-${imagePosition}`}>
+      <section className={`bl-about bl-about--overlap bl-about--image-${imagePosition}`} style={style}>
         {media}
         <div className="bl-about-overlap-card">{copy}</div>
       </section>
@@ -68,7 +71,7 @@ export default function AboutSection({
   }
 
   return (
-    <section className={`bl-about bl-about--split bl-about--image-${imagePosition}`}>
+    <section className={`bl-about bl-about--split bl-about--image-${imagePosition}`} style={style}>
       {media}
       {copy}
     </section>

@@ -21,6 +21,8 @@ export interface HeroProps {
   /** variant="full" only — short motto/tagline rendered below the CTA, styled light to match the rest of the hero copy. */
   quote?: string;
   quoteAttribution?: string;
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-hero-heading-size': '4rem' }`. See Hero.css for the full list of --bl-hero-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
 export default function Hero({
@@ -38,6 +40,7 @@ export default function Hero({
   scrollHint = false,
   quote,
   quoteAttribution,
+  style,
 }: HeroProps) {
   if (variant === 'full') {
     const quoteBlock = quote && (
@@ -79,7 +82,7 @@ export default function Hero({
       );
 
     return (
-      <section className="bl-hero bl-hero--full">
+      <section className="bl-hero bl-hero--full" style={style}>
         <div className="bl-hero-full-bg">
           {videoSrc ? (
             <video autoPlay loop muted playsInline poster={posterSrc}>
@@ -108,7 +111,7 @@ export default function Hero({
   }
 
   return (
-    <section className={`bl-hero bl-hero--${variant}`}>
+    <section className={`bl-hero bl-hero--${variant}`} style={style}>
       <div className="bl-hero-copy">
         {eyebrow && <span className="bl-hero-eyebrow">{eyebrow}</span>}
         <h1 className="bl-hero-heading">{heading}</h1>

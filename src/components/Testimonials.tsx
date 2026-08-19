@@ -8,6 +8,8 @@ export interface TestimonialsProps {
   eyebrow?: string;
   heading?: string;
   items: Testimonial[];
+  /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-testimonials-heading-size': '3rem' }`. See Testimonials.css for the full list of --bl-testimonials-*-size variables. Falls back to the shared --fs-* scale when unset. */
+  style?: React.CSSProperties;
 }
 
 const QuoteIcon = () => (
@@ -19,9 +21,9 @@ const QuoteIcon = () => (
   </svg>
 );
 
-export default function Testimonials({ eyebrow, heading, items }: TestimonialsProps) {
+export default function Testimonials({ eyebrow, heading, items, style }: TestimonialsProps) {
   return (
-    <section className="bl-testimonials">
+    <section className="bl-testimonials" style={style}>
       {(eyebrow || heading) && (
         <div className="bl-testimonials-head">
           {eyebrow && <span className="bl-testimonials-eyebrow">{eyebrow}</span>}

@@ -6,7 +6,7 @@
 .bl-pricing-eyebrow {
   display: inline-block;
   font-family: var(--font-body, sans-serif);
-  font-size: var(--fs-small, 0.875rem);
+  font-size: var(--bl-pricing-eyebrow-size, var(--fs-small, 0.875rem));
   font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -15,7 +15,7 @@
 }
 .bl-pricing-heading {
   font-family: var(--font-heading, sans-serif);
-  font-size: var(--fs-h2, 2.25rem);
+  font-size: var(--bl-pricing-heading-size, var(--fs-h2, 2.25rem));
   margin: 0 0 var(--space-2, 1rem);
 }
 .bl-pricing-description {
@@ -40,7 +40,7 @@
 }
 .bl-pricing-table thead th {
   background: var(--color-surface-alt, #f5f5f5);
-  font-size: var(--fs-small, 0.875rem);
+  font-size: var(--bl-pricing-table-head-size, var(--fs-small, 0.875rem));
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--color-text-muted, #666);
@@ -60,7 +60,7 @@
 }
 .bl-pricing-note {
   display: block;
-  font-size: var(--fs-small, 0.8125rem);
+  font-size: var(--bl-pricing-note-size, var(--fs-small, 0.8125rem));
   color: var(--color-text-muted, #666);
 }
 
