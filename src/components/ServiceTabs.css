@@ -43,20 +43,16 @@
   align-items: flex-start;
   text-align: left;
   width: 100%;
-  border: 1px solid var(--color-border, #e2e2e2);
+  border: none;
   background: var(--color-surface, #fff);
   border-radius: var(--radius-md, 16px);
   padding: var(--space-3, 1.5rem);
   cursor: pointer;
   font-family: var(--font-body, sans-serif);
-  transition: border-color 200ms var(--ease-out, ease), background-color 200ms var(--ease-out, ease);
-}
-.bl-service-tabs-item:hover {
-  border-color: var(--color-primary, #333);
+  transition: background-color 200ms var(--ease-out, ease);
 }
 .bl-service-tabs-item.is-active {
-  border-color: var(--color-primary, #333);
-  background: var(--color-primary-tint, #ededed);
+  background: #F8EEE6;
 }
 .bl-service-tabs-item-title {
   font-family: var(--font-heading, sans-serif);
