@@ -11,7 +11,7 @@
   display: inline-block;
   font-family: var(--font-body, sans-serif);
   font-size: var(--fs-small, 0.875rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-accent-dark, var(--color-primary, #333));
@@ -20,7 +20,7 @@
 .bl-features-heading {
   font-family: var(--font-heading, sans-serif);
   font-size: var(--fs-h2, 2rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   color: var(--color-text, #1a1a1a);
   margin: 0 0 var(--space-2, 0.75rem);
 }
@@ -54,7 +54,7 @@
 .bl-features-item-title {
   font-family: var(--font-heading, sans-serif);
   font-size: var(--fs-h4, 1.25rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   color: var(--color-text, #1a1a1a);
   margin: 0 0 0.4rem;
 }

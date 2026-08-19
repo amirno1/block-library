@@ -7,7 +7,7 @@
   display: inline-block;
   font-family: var(--font-body, sans-serif);
   font-size: var(--fs-small, 0.875rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-accent-dark, var(--color-primary, #333));
@@ -44,18 +44,18 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--color-text-muted, #666);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
 }
 .bl-pricing-table tbody tr {
   border-top: 1px solid var(--color-border, #e2e2e2);
 }
 .bl-pricing-table tbody td:first-child {
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   color: var(--color-text, #1a1a1a);
 }
 .bl-pricing-price {
   display: block;
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   color: var(--color-primary-dark, #1a1a1a);
 }
 .bl-pricing-note {

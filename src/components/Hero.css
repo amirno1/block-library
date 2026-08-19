@@ -17,7 +17,7 @@
   display: inline-block;
   font-family: var(--font-body, sans-serif);
   font-size: var(--fs-small, 0.875rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-accent-dark, var(--color-primary, #333));
@@ -27,7 +27,7 @@
 .bl-hero-heading {
   font-family: var(--font-heading, sans-serif);
   font-size: var(--fs-h1, 3rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   line-height: 1.2;
   color: var(--color-text, #1a1a1a);
   margin: 0 0 var(--space-2, 1rem);
@@ -50,7 +50,7 @@
   background: var(--color-primary, #1a1a1a);
   color: var(--color-text-inverse, #fff);
   font-family: var(--font-body, sans-serif);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   text-decoration: none;
 }
 .bl-hero-cta:hover {

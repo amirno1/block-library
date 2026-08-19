@@ -18,7 +18,7 @@
   display: inline-block;
   font-family: var(--font-body, sans-serif);
   font-size: var(--fs-small, 0.875rem);
-  font-weight: 600;
+  font-weight: var(--font-weight-bold, 600);
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-accent-dark, var(--color-primary, #333));
