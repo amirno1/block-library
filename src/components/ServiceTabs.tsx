@@ -16,9 +16,25 @@ export interface ServiceTabsProps {
   items: ServiceTabItem[];
 }
 
+/** Appends a changing query param so the browser treats it as a fresh
+ * resource load — forces embedded SVG animations (CSS or SMIL) to restart,
+ * since they replay whenever the image itself is freshly decoded. Doesn't
+ * touch the DOM node's identity/key, so the opacity crossfade (driven by
+ * a class toggle, unrelated to src) keeps transitioning normally. */
+function withRestartToken(src: string, token: number): string {
+  if (token === 0) return src;
+  return `${src}${src.includes('?') ? '&' : '?'}_r=${token}`;
+}
+
 export default function ServiceTabs({ eyebrow, heading, description, items }: ServiceTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [restartToken, setRestartToken] = useState(0);
   const hasImages = items.some((item) => item.imageSrc);
+
+  const selectItem = (i: number) => {
+    setActiveIndex(i);
+    setRestartToken((t) => t + 1);
+  };
 
   return (
     <section className="bl-service-tabs">
@@ -40,7 +56,7 @@ export default function ServiceTabs({ eyebrow, heading, description, items }: Se
                 role="tab"
                 aria-selected={isActive}
                 className={`bl-service-tabs-item ${isActive ? 'is-active' : ''}`}
-                onClick={() => setActiveIndex(i)}
+                onClick={() => selectItem(i)}
               >
                 <span className="bl-service-tabs-item-title">{item.title}</span>
                 {item.description && (
@@ -56,19 +72,20 @@ export default function ServiceTabs({ eyebrow, heading, description, items }: Se
         </div>
         {hasImages && (
           <div className="bl-service-tabs-media">
-            {items.map(
-              (item, i) =>
-                item.imageSrc && (
-                  <img
-                    key={item.title}
-                    src={item.imageSrc}
-                    alt={item.imageAlt || ''}
-                    className={i === activeIndex ? 'is-active' : ''}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                ),
-            )}
+            {items.map((item, i) => {
+              if (!item.imageSrc) return null;
+              const isActive = i === activeIndex;
+              return (
+                <img
+                  key={item.title}
+                  src={isActive ? withRestartToken(item.imageSrc, restartToken) : item.imageSrc}
+                  alt={item.imageAlt || ''}
+                  className={isActive ? 'is-active' : ''}
+                  loading="lazy"
+                  decoding="async"
+                />
+              );
+            })}
           </div>
         )}
       </div>
