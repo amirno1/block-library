@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export interface ServiceTabItem {
   title: string;
@@ -31,12 +31,39 @@ function withRestartToken(src: string, token: number): string {
 export default function ServiceTabs({ eyebrow, heading, description, items, style }: ServiceTabsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [restartToken, setRestartToken] = useState(0);
+  // Real `src` isn't assigned to any image until this flips true — before
+  // that, the default (first) item's animation would otherwise start
+  // decoding/playing the moment it mounts, regardless of scroll position.
+  // loading="lazy" alone isn't precise enough: its load-ahead margin can
+  // fire well before the section is actually in view, so by the time a
+  // visitor scrolls to it the animation's already partway through.
+  const [hasEnteredViewport, setHasEnteredViewport] = useState(false);
+  const mediaRef = useRef<HTMLDivElement>(null);
   const hasImages = items.some((item) => item.imageSrc);
 
   const selectItem = (i: number) => {
     setActiveIndex(i);
     setRestartToken((t) => t + 1);
   };
+
+  useEffect(() => {
+    const node = mediaRef.current;
+    if (!node || typeof IntersectionObserver === 'undefined') {
+      setHasEnteredViewport(true);
+      return undefined;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setHasEnteredViewport(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <section className="bl-service-tabs" style={style}>
@@ -73,21 +100,22 @@ export default function ServiceTabs({ eyebrow, heading, description, items, styl
           })}
         </div>
         {hasImages && (
-          <div className="bl-service-tabs-media">
-            {items.map((item, i) => {
-              if (!item.imageSrc) return null;
-              const isActive = i === activeIndex;
-              return (
-                <img
-                  key={item.title}
-                  src={isActive ? withRestartToken(item.imageSrc, restartToken) : item.imageSrc}
-                  alt={item.imageAlt || ''}
-                  className={isActive ? 'is-active' : ''}
-                  loading="lazy"
-                  decoding="async"
-                />
-              );
-            })}
+          <div className="bl-service-tabs-media" ref={mediaRef}>
+            {hasEnteredViewport &&
+              items.map((item, i) => {
+                if (!item.imageSrc) return null;
+                const isActive = i === activeIndex;
+                return (
+                  <img
+                    key={item.title}
+                    src={isActive ? withRestartToken(item.imageSrc, restartToken) : item.imageSrc}
+                    alt={item.imageAlt || ''}
+                    className={isActive ? 'is-active' : ''}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                );
+              })}
           </div>
         )}
       </div>
