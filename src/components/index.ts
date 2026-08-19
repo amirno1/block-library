@@ -25,6 +25,12 @@ export type { TestimonialsProps, Testimonial } from './Testimonials';
 export { default as ContactMap } from './ContactMap';
 export type { ContactMapProps } from './ContactMap';
 
+export { default as ContactInfo } from './ContactInfo';
+export type { ContactInfoProps } from './ContactInfo';
+
+export { default as MapEmbed } from './MapEmbed';
+export type { MapEmbedProps } from './MapEmbed';
+
 export { default as AboutSection } from './AboutSection';
 export type { AboutSectionProps } from './AboutSection';
 

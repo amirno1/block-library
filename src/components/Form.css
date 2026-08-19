@@ -54,12 +54,17 @@
   font-family: var(--font-body, sans-serif);
   font-size: var(--bl-form-input-size, var(--fs-body, 1rem));
   color: var(--color-text, #1a1a1a);
-  background: var(--color-surface, #fff);
-  border: 1px solid var(--color-border, #e2e2e2);
+  /* No border at all — matches the rest of this design (buttons/cards
+     elsewhere are also borderless). A background fill distinguishes the
+     field from the section behind it instead. Invalid state no longer
+     gets its own color treatment either — the browser's native
+     validation bubble already says what's wrong; a mismatched red
+     border was redundant on top of that. */
+  background: var(--color-surface-alt, #f0f0f0);
+  border: none;
   border-radius: var(--radius-md, 8px);
   padding: 0.75rem 1rem;
   min-height: 48px;
-  transition: border-color 200ms linear;
 }
 .bl-form-field textarea {
   min-height: 120px;
@@ -70,10 +75,6 @@
 .bl-form-field select:focus-visible {
   outline: 3px solid var(--color-accent, #333);
   outline-offset: 2px;
-}
-.bl-form-field input:invalid:not(:placeholder-shown):not(:focus),
-.bl-form-field textarea:invalid:not(:placeholder-shown):not(:focus) {
-  border-color: var(--color-error, #b3452e);
 }
 
 .bl-form-submit {
