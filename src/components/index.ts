@@ -30,3 +30,6 @@ export type { AboutSectionProps } from './AboutSection';
 
 export { default as Quote } from './Quote';
 export type { QuoteProps } from './Quote';
+
+export { default as Form } from './Form';
+export type { FormProps, FormField } from './Form';
