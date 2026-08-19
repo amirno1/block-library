@@ -73,6 +73,12 @@
   font-weight: var(--font-weight-bold, 600);
   font-size: var(--bl-service-tabs-item-title-size, var(--fs-h4, 1.375rem));
   color: var(--color-text, #1a1a1a);
+  padding-bottom: 15px;
+}
+@media (max-width: 640px) {
+  .bl-service-tabs-item-title {
+    padding-bottom: 10px;
+  }
 }
 
 /* Smooth expand/collapse without knowing the content's height ahead of
