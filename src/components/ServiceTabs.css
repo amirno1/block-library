@@ -49,23 +49,21 @@
   padding: var(--space-3, 1.5rem);
   cursor: pointer;
   font-family: var(--font-body, sans-serif);
-  transition: background-color 200ms var(--ease-out, ease),
-              transform 200ms var(--ease-out, ease),
-              box-shadow 200ms var(--ease-out, ease);
+  /* linear, not eased — a constant-speed fade reads calmer/smoother here
+     than an accelerating one. No color change, no transform/lift (both
+     felt jumpy) — just the shadow fading in and out. */
+  transition: box-shadow 400ms linear;
 }
 .bl-service-tabs-item:hover {
-  background: var(--color-surface-alt, #f5f5f5);
-  transform: translateY(-3px);
   box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.08));
-}
-.bl-service-tabs-item:active {
-  transform: translateY(-1px);
 }
 .bl-service-tabs-item.is-active {
   background: #F8EEE6;
 }
+/* Open item doesn't get the hover treatment at all — it's already
+   distinguished by its fill, and it shouldn't visually react to hover. */
 .bl-service-tabs-item.is-active:hover {
-  background: #F8EEE6;
+  box-shadow: none;
 }
 .bl-service-tabs-item-title {
   font-family: var(--font-heading, sans-serif);
