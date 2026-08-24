@@ -42,11 +42,17 @@
 .bl-partners-grid {
   /* Deliberate exception: every other full-bleed image in this design
      reaches the true viewport edge with 0 padding — this grid is the one
-     place that instead gets the same inset as text (--content-padding). */
-  padding: 0 var(--content-padding, 20px);
+     place that instead gets the same inset as text (--content-padding).
+     Like the copy, it takes that inset only on the outer edge; the column
+     `gap` already separates it from the text, so padding on the inner side
+     would stack on top of that. Flips with textPosition. */
+  padding: 0 var(--content-padding, 20px) 0 0;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 10px;
+}
+.bl-partners--text-right .bl-partners-grid {
+  padding: 0 0 0 var(--content-padding, 20px);
 }
 .bl-partners-cell {
   background: var(--color-surface, #fff);
@@ -77,7 +83,9 @@
   }
   /* Single column — no inner side left, so restore the inset on both edges. */
   .bl-partners-text,
-  .bl-partners--text-right .bl-partners-text {
+  .bl-partners--text-right .bl-partners-text,
+  .bl-partners-grid,
+  .bl-partners--text-right .bl-partners-grid {
     padding: 0 var(--content-padding, 20px);
   }
   .bl-partners-grid {
