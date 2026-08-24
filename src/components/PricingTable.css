@@ -88,3 +88,24 @@
     margin-bottom: 0.2rem;
   }
 }
+
+/* --- CMS rich text ------------------------------------------------------
+   See AboutSection.css — same contract, mirrors .bl-pricing-description. */
+.bl-pricing-richtext {
+  margin: 0 auto;
+}
+.bl-pricing-richtext > p,
+.bl-pricing-richtext ul {
+  color: var(--color-text-muted, #666);
+}
+.bl-pricing-richtext ul {
+  padding-left: 1.25em;
+  text-align: left;
+}
+.bl-pricing-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-pricing-richtext > :last-child {
+  margin-bottom: 0;
+}

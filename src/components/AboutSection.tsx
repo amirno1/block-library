@@ -1,3 +1,5 @@
+import { RichBody, type BodyCopy } from './richText';
+
 export interface AboutSectionProps {
   /** 'split' (default) — full-width, half image / half text. 'stacked' — image on top, text centered below. 'overlap' — text card overlaps the image's edge. */
   variant?: 'split' | 'stacked' | 'overlap';
@@ -5,8 +7,8 @@ export interface AboutSectionProps {
   imagePosition?: 'left' | 'right';
   eyebrow?: string;
   heading: string;
-  /** Separate paragraphs with a blank line. */
-  body: string;
+  /** Plain string — separate paragraphs with a blank line — or rendered rich text. */
+  body: BodyCopy;
   credentials?: string[];
   imageSrc?: string;
   imageAlt?: string;
@@ -25,17 +27,11 @@ export default function AboutSection({
   imageAlt,
   style,
 }: AboutSectionProps) {
-  const paragraphs = body.split('\n\n');
-
   const copy = (
     <div className="bl-about-copy">
       {eyebrow && <span className="bl-about-eyebrow">{eyebrow}</span>}
       <h2 className="bl-about-heading">{heading}</h2>
-      {paragraphs.map((paragraph, i) => (
-        <p key={i} className="bl-about-paragraph">
-          {paragraph}
-        </p>
-      ))}
+      <RichBody body={body} paragraphClassName="bl-about-paragraph" richClassName="bl-about-richtext" />
       {credentials && credentials.length > 0 && (
         <ul className="bl-about-credentials">
           {credentials.map((credential) => (

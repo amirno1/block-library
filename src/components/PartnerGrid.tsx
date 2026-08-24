@@ -1,3 +1,5 @@
+import { RichBody, type BodyCopy } from './richText';
+
 export interface Partner {
   name: string;
   logoSrc?: string;
@@ -8,7 +10,8 @@ export interface Partner {
 export interface PartnerGridProps {
   eyebrow?: string;
   heading?: string;
-  body?: string;
+  /** Plain string — separate paragraphs with a blank line — or rendered rich text. */
+  body?: BodyCopy;
   /** Which side the heading/body text sits on; logos fill the other side. */
   textPosition?: 'left' | 'right';
   partners: Partner[];
@@ -17,18 +20,12 @@ export interface PartnerGridProps {
 }
 
 export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'left', partners, style }: PartnerGridProps) {
-  const paragraphs = body ? body.split('\n\n') : [];
-
   return (
     <section className={`bl-partners bl-partners--text-${textPosition}`} style={style}>
       <div className="bl-partners-text">
         {eyebrow && <span className="bl-partners-eyebrow">{eyebrow}</span>}
         {heading && <h2 className="bl-partners-heading">{heading}</h2>}
-        {paragraphs.map((paragraph, i) => (
-          <p key={i} className="bl-partners-paragraph">
-            {paragraph}
-          </p>
-        ))}
+        <RichBody body={body} paragraphClassName="bl-partners-paragraph" richClassName="bl-partners-richtext" />
       </div>
       <div className="bl-partners-grid">
         {partners.map((partner) => {

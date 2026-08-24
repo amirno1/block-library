@@ -142,3 +142,24 @@
     aspect-ratio: 16 / 10;
   }
 }
+
+/* --- CMS rich text ------------------------------------------------------
+   See AboutSection.css — same contract, mirrors .bl-service-tabs-description. */
+.bl-service-tabs-richtext {
+  margin: 0 auto;
+}
+.bl-service-tabs-richtext > p,
+.bl-service-tabs-richtext ul {
+  color: var(--color-text-muted, #666);
+}
+.bl-service-tabs-richtext ul {
+  padding-left: 1.25em;
+  text-align: left;
+}
+.bl-service-tabs-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-service-tabs-richtext > :last-child {
+  margin-bottom: 0;
+}

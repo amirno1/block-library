@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { RichBody, type BodyCopy } from './richText';
 
 export interface ServiceTabItem {
   title: string;
+  /** Plain text only — this renders inside a <button>, which cannot legally
+      contain block-level or interactive elements. */
   description?: string;
   imageSrc?: string;
   imageAlt?: string;
@@ -12,7 +15,7 @@ export interface ServiceTabItem {
 export interface ServiceTabsProps {
   eyebrow?: string;
   heading?: string;
-  description?: string;
+  description?: BodyCopy;
   items: ServiceTabItem[];
   /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-service-tabs-heading-size': '3rem' }`. See ServiceTabs.css for the full list of --bl-service-tabs-*-size variables. Falls back to the shared --fs-* scale when unset. */
   style?: React.CSSProperties;
@@ -71,7 +74,13 @@ export default function ServiceTabs({ eyebrow, heading, description, items, styl
         <div className="bl-service-tabs-head">
           {eyebrow && <span className="bl-service-tabs-eyebrow">{eyebrow}</span>}
           {heading && <h2 className="bl-service-tabs-heading">{heading}</h2>}
-          {description && <p className="bl-service-tabs-description">{description}</p>}
+          {description && (
+            <RichBody
+              body={description}
+              paragraphClassName="bl-service-tabs-description"
+              richClassName="bl-service-tabs-richtext"
+            />
+          )}
         </div>
       )}
       <div className="bl-service-tabs-grid">

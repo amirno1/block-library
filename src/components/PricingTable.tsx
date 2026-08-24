@@ -1,3 +1,5 @@
+import { RichBody, type BodyCopy } from './richText';
+
 export interface PricingRow {
   label: string;
   duration?: string;
@@ -8,7 +10,8 @@ export interface PricingRow {
 export interface PricingTableProps {
   eyebrow?: string;
   heading?: string;
-  description?: string;
+  /** Plain string — separate paragraphs with a blank line — or rendered rich text. */
+  description?: BodyCopy;
   /** Column headers, in order — length should match the row shape (label, duration, price, note). */
   columns: string[];
   rows: PricingRow[];
@@ -23,7 +26,13 @@ export default function PricingTable({ eyebrow, heading, description, columns, r
         <div className="bl-pricing-head">
           {eyebrow && <span className="bl-pricing-eyebrow">{eyebrow}</span>}
           {heading && <h2 className="bl-pricing-heading">{heading}</h2>}
-          {description && <p className="bl-pricing-description">{description}</p>}
+          {description && (
+            <RichBody
+              body={description}
+              paragraphClassName="bl-pricing-description"
+              richClassName="bl-pricing-richtext"
+            />
+          )}
         </div>
       )}
       <div className="bl-pricing-table-wrap">

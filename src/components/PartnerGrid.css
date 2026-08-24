@@ -73,3 +73,20 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* --- CMS rich text ------------------------------------------------------
+   See AboutSection.css — same contract, mirrors .bl-partners-paragraph. */
+.bl-partners-richtext > p,
+.bl-partners-richtext ul {
+  color: var(--color-text-muted, #666);
+}
+.bl-partners-richtext ul {
+  padding-left: 1.25em;
+}
+.bl-partners-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-partners-richtext > :last-child {
+  margin-bottom: 0;
+}

@@ -153,3 +153,30 @@
     padding: var(--space-4, 2rem);
   }
 }
+
+/* --- CMS rich text ------------------------------------------------------
+   Portable Text (or any rendered rich text) passed as `body` instead of a
+   plain string. Mirrors .bl-about-paragraph so both shapes look identical. */
+.bl-about-richtext > p {
+  color: var(--color-text-muted, #666);
+  line-height: 1.7;
+  margin: 0 0 var(--space-2, 1rem);
+}
+.bl-about-richtext > h3 {
+  font-size: var(--bl-about-subheading-size, var(--fs-h4, 1.25rem));
+  color: var(--color-text, #1a1a1a);
+  margin: var(--space-3, 1.25rem) 0 var(--space-1, 0.5rem);
+}
+.bl-about-richtext ul {
+  color: var(--color-text-muted, #666);
+  line-height: 1.7;
+  margin: 0 0 var(--space-2, 1rem);
+  padding-left: 1.25em;
+}
+.bl-about-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-about-richtext > :last-child {
+  margin-bottom: 0;
+}
