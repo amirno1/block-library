@@ -11,8 +11,14 @@
   direction: ltr;
 }
 
+/* Inset only on the outer side — see AboutSection.css for the reasoning. The
+   logo grid opts into the same inset on its own side, and the grid `gap`
+   covers the space between the two. Flips with textPosition. */
 .bl-partners-text {
-  padding: 0 var(--content-padding, 20px);
+  padding: 0 0 0 var(--content-padding, 20px);
+}
+.bl-partners--text-right .bl-partners-text {
+  padding: 0 var(--content-padding, 20px) 0 0;
 }
 .bl-partners-eyebrow {
   display: inline-block;
@@ -68,6 +74,11 @@
 @media (max-width: 860px) {
   .bl-partners {
     grid-template-columns: 1fr;
+  }
+  /* Single column — no inner side left, so restore the inset on both edges. */
+  .bl-partners-text,
+  .bl-partners--text-right .bl-partners-text {
+    padding: 0 var(--content-padding, 20px);
   }
   .bl-partners-grid {
     grid-template-columns: repeat(2, 1fr);

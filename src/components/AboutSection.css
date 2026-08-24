@@ -67,15 +67,20 @@
   aspect-ratio: 3 / 4;
   height: 100%;
 }
+/* Inset only on the side facing the viewport edge. The image is full-bleed to
+   the opposite edge and the grid `gap` already separates the two columns, so
+   padding on the inner side would stack on top of that gap and push the copy
+   in twice as far. Which side is "inner" flips with imagePosition. */
 .bl-about--split .bl-about-copy {
   order: 2;
-  padding: 0 var(--content-padding, 20px);
+  padding: 0 var(--content-padding, 20px) 0 0;
 }
 .bl-about--split.bl-about--image-right .bl-about-media {
   order: 2;
 }
 .bl-about--split.bl-about--image-right .bl-about-copy {
   order: 1;
+  padding: 0 0 0 var(--content-padding, 20px);
 }
 
 @media (max-width: 860px) {
@@ -86,8 +91,12 @@
     order: -1 !important;
     aspect-ratio: 16 / 10;
   }
-  .bl-about--split .bl-about-copy {
+  .bl-about--split .bl-about-copy,
+  .bl-about--split.bl-about--image-right .bl-about-copy {
     order: 0 !important;
+    /* Single column — the image is stacked above rather than beside, so there
+       is no inner side and the copy needs the inset on both edges again. */
+    padding: 0 var(--content-padding, 20px);
   }
 }
 
