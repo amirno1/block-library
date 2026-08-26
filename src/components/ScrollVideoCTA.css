@@ -1,0 +1,190 @@
+/* Scroll-scrubbed cinematic video CTA: a tall section with a sticky
+   viewport-height stage inside it, a <video> whose currentTime is driven
+   directly by scroll progress, and a handful of text beats that fade in
+   and out over that same progress. See ScrollVideoCTA.tsx for the
+   lazy-load/scrub-smoothing mechanics — this file is presentation only. */
+
+.bl-scroll-video-cta-stage {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--color-bg, #f0f0ec);
+}
+
+.bl-scroll-video-cta-video,
+.bl-scroll-video-cta-poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--bl-scroll-video-cta-object-position, 50% 50%);
+  background: var(--color-bg, #f0f0ec);
+}
+.bl-scroll-video-cta-video {
+  pointer-events: none;
+}
+
+/* Real HTML, typography straight over the footage (no card), with a soft
+   translucent wash behind the text only, not a hard-edged box, so it stays
+   legible without looking bolted on. */
+.bl-scroll-video-cta-text {
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  padding: 0.6rem 0.9rem;
+  max-width: 480px;
+  background: color-mix(in srgb, var(--color-bg, #f0f0ec) 72%, transparent);
+  color: var(--color-text, #1a1a1a);
+  font-family: var(--font-heading, sans-serif);
+  font-size: var(--bl-scroll-video-cta-text-size, var(--fs-h4, 1.375rem));
+  line-height: 1.4;
+}
+
+.bl-scroll-video-cta-panel {
+  position: absolute;
+  z-index: 2;
+  max-width: 34ch;
+  color: var(--color-text, #1a1a1a);
+}
+.bl-scroll-video-cta-heading {
+  font-family: var(--font-heading, sans-serif);
+  font-size: var(--bl-scroll-video-cta-heading-size, var(--fs-h2, 2.25rem));
+  font-weight: var(--font-weight-bold, 600);
+  margin: 0 0 var(--space-2, 1rem);
+}
+.bl-scroll-video-cta-description {
+  color: var(--color-text-muted, #666);
+  margin: 0 0 var(--space-3, 1.5rem);
+}
+/* --- CMS rich text ------------------------------------------------------
+   See AboutSection.css — same contract, mirrors .bl-scroll-video-cta-description. */
+.bl-scroll-video-cta-richtext {
+  margin: 0 0 var(--space-3, 1.5rem);
+}
+.bl-scroll-video-cta-richtext > p,
+.bl-scroll-video-cta-richtext ul {
+  color: var(--color-text-muted, #666);
+}
+.bl-scroll-video-cta-richtext ul {
+  padding-left: 1.25em;
+}
+.bl-scroll-video-cta-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-scroll-video-cta-richtext > :last-child {
+  margin-bottom: 0;
+}
+.bl-scroll-video-cta-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0.9rem 2rem;
+  border-radius: var(--radius-lg, 999px);
+  background: var(--color-primary, #1a1a1a);
+  color: var(--color-text-inverse, #fff);
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-h5, 1.0625rem);
+  font-weight: var(--font-weight-bold, 600);
+  text-decoration: none;
+  transition: background-color 200ms linear;
+}
+.bl-scroll-video-cta-button:hover {
+  background: var(--color-primary-dark, #000);
+}
+
+/* Position variants, shared between beats and the final panel — pick
+   whichever is visually quietest in your footage at that point in time. */
+.bl-scroll-video-cta-pos-left-center {
+  top: 50%;
+  left: var(--content-padding, 20px);
+  transform: translateY(-50%);
+  text-align: left;
+}
+.bl-scroll-video-cta-pos-right-center {
+  top: 50%;
+  right: var(--content-padding, 20px);
+  transform: translateY(-50%);
+  text-align: left;
+}
+.bl-scroll-video-cta-pos-top-center {
+  top: 12%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.bl-scroll-video-cta-pos-bottom-center {
+  bottom: 14%;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+.bl-scroll-video-cta-pos-bottom-left {
+  bottom: 14%;
+  left: var(--content-padding, 20px);
+  text-align: left;
+}
+.bl-scroll-video-cta-pos-bottom-right {
+  bottom: 14%;
+  right: var(--content-padding, 20px);
+  text-align: right;
+}
+
+/* Static (reduced-motion / data-saver / pre-hydration) state: poster frame
+   fills a single viewport-height section, CTA fully visible immediately,
+   no scroll-driven behavior at all — position variants don't apply here,
+   it's always the same centered layout regardless of `ctaPosition`. */
+.bl-scroll-video-cta--static {
+  position: relative;
+  height: 100svh;
+  overflow: hidden;
+  background: var(--color-bg, #f0f0ec);
+}
+.bl-scroll-video-cta-panel--static {
+  position: absolute;
+  top: 50%;
+  right: var(--content-padding, 20px);
+  transform: translateY(-50%);
+  opacity: 0;
+}
+.bl-scroll-video-cta-panel--static.is-visible {
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .bl-scroll-video-cta-video,
+  .bl-scroll-video-cta-poster {
+    object-position: var(--bl-scroll-video-cta-object-position-mobile, var(--bl-scroll-video-cta-object-position, 50% 50%));
+  }
+  .bl-scroll-video-cta-text {
+    max-width: none;
+    left: var(--content-padding, 20px);
+    right: var(--content-padding, 20px);
+    /* Every position variant above sets its own transform (translateX/Y for
+       centering or vertical-centering) — reset it here, since at this width
+       every beat becomes the same full-width centered band regardless of
+       which position it uses on desktop. Without this, left/right above
+       fight leftover translateX(-50%) from bottom-center/top-center and
+       push the text off-screen. */
+    transform: none;
+    text-align: center;
+    font-size: var(--bl-scroll-video-cta-text-size-mobile, var(--fs-h5, 1.0625rem));
+  }
+  .bl-scroll-video-cta-panel,
+  .bl-scroll-video-cta-panel--static {
+    top: auto;
+    bottom: var(--space-5, 3rem);
+    right: 0;
+    left: 0;
+    transform: none;
+    max-width: none;
+    padding: 0 var(--content-padding, 20px);
+    text-align: center;
+  }
+  .bl-scroll-video-cta-heading {
+    font-size: var(--bl-scroll-video-cta-heading-size-mobile, var(--fs-h3, 1.75rem));
+  }
+}

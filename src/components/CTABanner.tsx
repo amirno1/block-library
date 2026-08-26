@@ -1,7 +1,11 @@
+import { RichBody, type BodyCopy } from './richText';
+
 export interface CTABannerProps {
   variant?: 'centered' | 'split' | 'image';
+  eyebrow?: string;
   heading: string;
-  description?: string;
+  /** Plain string — separate paragraphs with a blank line — or rendered rich text. */
+  description?: BodyCopy;
   ctaText: string;
   ctaHref: string;
   /** variant="image" only — full-bleed image panel next to the text panel. */
@@ -13,6 +17,7 @@ export interface CTABannerProps {
 
 export default function CTABanner({
   variant = 'split',
+  eyebrow,
   heading,
   description,
   ctaText,
@@ -33,8 +38,9 @@ export default function CTABanner({
           </div>
         )}
         <div className="bl-cta-image-panel bl-reveal">
+          {eyebrow && <span className="bl-cta-eyebrow">{eyebrow}</span>}
           <h2 className="bl-cta-heading">{heading}</h2>
-          {description && <p className="bl-cta-description">{description}</p>}
+          <RichBody body={description} paragraphClassName="bl-cta-description" richClassName="bl-cta-richtext" />
           <a className="bl-cta-button" href={ctaHref}>
             {ctaText}
           </a>
@@ -46,8 +52,9 @@ export default function CTABanner({
   return (
     <div className={`bl-cta bl-cta--${variant}`} style={style}>
       <div className="bl-cta-text">
+        {eyebrow && <span className="bl-cta-eyebrow">{eyebrow}</span>}
         <h2 className="bl-cta-heading">{heading}</h2>
-        {description && <p className="bl-cta-description">{description}</p>}
+        <RichBody body={description} paragraphClassName="bl-cta-description" richClassName="bl-cta-richtext" />
       </div>
       <a className="bl-cta-button" href={ctaHref}>
         {ctaText}

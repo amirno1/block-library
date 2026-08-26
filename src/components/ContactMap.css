@@ -27,6 +27,23 @@
   color: var(--color-text-muted, #666);
 }
 
+/* --- CMS rich text ------------------------------------------------------
+   See AboutSection.css — same contract, mirrors .bl-contact-description. */
+.bl-contact-richtext > p,
+.bl-contact-richtext ul {
+  color: var(--color-text-muted, #666);
+}
+.bl-contact-richtext ul {
+  padding-left: 1.25em;
+}
+.bl-contact-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-contact-richtext > :last-child {
+  margin-bottom: 0;
+}
+
 .bl-contact-details {
   margin: var(--space-3, 1.5rem) 0 0;
   display: flex;

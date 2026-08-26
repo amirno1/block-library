@@ -55,26 +55,148 @@
   padding: 0 0 0 var(--content-padding, 20px);
 }
 .bl-partners-cell {
+  /* White, not transparent — see PartnerGrid.tsx for the reference-site
+     note. No padding: the logo fills the card completely, edge to edge,
+     same as that reference. */
   background: var(--color-surface, #fff);
   border: 1px solid var(--color-border, #e2e2e2);
   border-radius: var(--radius-md, 16px);
+  overflow: hidden;
   aspect-ratio: 4 / 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-3, 1.5rem);
+  /* Same technique as ServiceTabs' cards (.bl-service-tabs-item): linear,
+     not eased — reads calmer than an accelerating fade — and box-shadow
+     only, no color/transform change, which read as jumpy there too. The
+     shadow itself is stronger than ServiceTabs' own, deliberately — that
+     value all but disappears against a mid-toned/saturated section
+     background, where this needs to keep reading clearly. */
+  transition: box-shadow 400ms linear;
 }
 .bl-partners-cell img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.bl-partners-cell a {
+/* Shown instead of the image when a partner has no logo. */
+.bl-partners-cell-name {
+  font-family: var(--font-heading, sans-serif);
+  font-size: var(--fs-h5, 1.0625rem);
+  font-weight: var(--font-weight-bold, 600);
+  color: var(--color-text, #1a1a1a);
+  text-align: center;
+  padding: 0 var(--space-2, 1rem);
+}
+.bl-partners-cell a,
+.bl-partners-cell button {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 100%;
+}
+.bl-partners-cell button {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+/* Hover and active share the exact same shadow (no border/background
+   change) — hovering an already-active card is a no-op rather than
+   stacking a second effect on top of the first. */
+.bl-partners-cell:hover,
+.bl-partners-cell.is-active {
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.35);
+}
+
+/* Detail panel: collapses to nothing by default, expands open via the
+   grid-rows technique (animates a height nothing else here needs to
+   measure) — same mechanism as ServiceTabs' description disclosure. */
+.bl-partners-detail {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 500ms var(--ease-out, ease);
+}
+.bl-partners-detail.is-open {
+  grid-template-rows: 1fr;
+}
+.bl-partners-detail-inner {
+  overflow: hidden;
+}
+.bl-partners-detail.is-open .bl-partners-detail-inner {
+  padding-top: var(--space-3, 1.5rem);
+}
+/* The grid-rows transition above only covers the panel's very first
+   open/close — content swapping while it's already open (clicking a
+   different partner) doesn't retrigger it. This is what actually
+   animates every swap: bl-partners-detail-content remounts (it's keyed on
+   activeIndex in PartnerGrid.tsx) each time the active partner changes,
+   and a fresh mount replays a CSS animation the way a transition alone
+   can't. Linear opacity only, matching this site's other fades. */
+.bl-partners-detail-content {
+  animation: bl-partners-detail-fade-in 300ms linear;
+}
+@keyframes bl-partners-detail-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.bl-partners-detail-name {
+  font-family: var(--font-heading, sans-serif);
+  /* Now the largest thing in this column, since the section-level heading
+     it used to sit under is gone — sized to match what that used to be. */
+  font-size: var(--bl-partners-detail-name-size, var(--fs-h2, 2.25rem));
+  /* A dedicated var, not the shared --space-* scale — this needs to stay a
+     real, generous gap regardless of how those sitewide tokens are tuned. */
+  margin: 0 0 var(--bl-partners-detail-name-gap, 40px);
+}
+.bl-partners-detail-description {
+  color: var(--color-text-muted, #666);
+  margin: 0 0 var(--bl-partners-detail-description-gap, 40px);
+}
+/* Rich-text variant of the same gap — the wrapper div (not its last
+   paragraph, which gets its bottom margin zeroed) carries the gap so it
+   matches the plain-string version above exactly. */
+.bl-partners-detail-richtext {
+  margin: 0 0 var(--bl-partners-detail-description-gap, 40px);
+}
+.bl-partners-detail-richtext > p,
+.bl-partners-detail-richtext ul {
+  color: var(--color-text-muted, #666);
+}
+.bl-partners-detail-richtext ul {
+  padding-left: 1.25em;
+}
+.bl-partners-detail-richtext a {
+  color: var(--color-primary-dark, currentColor);
+  text-decoration: underline;
+}
+.bl-partners-detail-richtext > :last-child {
+  margin-bottom: 0;
+}
+.bl-partners-detail-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.6rem 1.5rem;
+  border-radius: var(--radius-lg, 999px);
+  background: var(--color-primary, #1a1a1a);
+  color: var(--color-text-inverse, #fff);
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--fs-small, 0.875rem);
+  font-weight: var(--font-weight-bold, 600);
+  text-decoration: none;
+  transition: background-color var(--duration-base, 220ms) var(--ease-out, ease);
+}
+.bl-partners-detail-link:hover {
+  background: var(--color-primary-dark, #000);
 }
 
 @media (max-width: 860px) {

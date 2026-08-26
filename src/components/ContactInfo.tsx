@@ -1,9 +1,11 @@
 import type { CSSProperties } from 'react';
+import { RichBody, type BodyCopy } from './richText';
 
 export interface ContactInfoProps {
   eyebrow?: string;
   heading?: string;
-  description?: string;
+  /** Plain string — separate paragraphs with a blank line — or rendered rich text. */
+  description?: BodyCopy;
   address?: string;
   phone?: string;
   email?: string;
@@ -23,7 +25,7 @@ export default function ContactInfo({ eyebrow, heading, description, address, ph
     <div className="bl-contact-info" style={style}>
       {eyebrow && <span className="bl-contact-eyebrow">{eyebrow}</span>}
       {heading && <h2 className="bl-contact-heading">{heading}</h2>}
-      {description && <p className="bl-contact-description">{description}</p>}
+      <RichBody body={description} paragraphClassName="bl-contact-description" richClassName="bl-contact-richtext" />
       <dl className="bl-contact-details">
         {address && (
           <div>

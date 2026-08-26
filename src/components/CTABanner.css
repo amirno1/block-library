@@ -10,6 +10,16 @@
   gap: var(--space-3, 1.5rem);
 }
 
+.bl-cta-eyebrow {
+  display: inline-block;
+  font-family: var(--font-body, sans-serif);
+  font-size: var(--bl-cta-eyebrow-size, var(--fs-small, 0.875rem));
+  font-weight: var(--font-weight-bold, 600);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: color-mix(in srgb, var(--color-text-inverse, #fff) 75%, transparent);
+  margin-bottom: var(--space-1, 0.5rem);
+}
 .bl-cta-heading {
   font-family: var(--font-heading, sans-serif);
   font-size: var(--bl-cta-heading-size, var(--fs-h2, 1.75rem));
@@ -21,6 +31,26 @@
   color: color-mix(in srgb, var(--color-text-inverse, #fff) 82%, transparent);
   margin: 0;
   max-width: 48ch;
+}
+/* --- CMS rich text ------------------------------------------------------
+   See AboutSection.css — same contract, mirrors .bl-cta-description. */
+.bl-cta-richtext {
+  max-width: 48ch;
+}
+.bl-cta-richtext > p,
+.bl-cta-richtext ul {
+  color: color-mix(in srgb, var(--color-text-inverse, #fff) 82%, transparent);
+  margin: 0 0 var(--space-2, 1rem);
+}
+.bl-cta-richtext ul {
+  padding-left: 1.25em;
+}
+.bl-cta-richtext a {
+  color: var(--color-text-inverse, #fff);
+  text-decoration: underline;
+}
+.bl-cta-richtext > :last-child {
+  margin-bottom: 0;
 }
 
 .bl-cta-button {
@@ -48,7 +78,8 @@
   flex-direction: column;
   text-align: center;
 }
-.bl-cta--centered .bl-cta-description {
+.bl-cta--centered .bl-cta-description,
+.bl-cta--centered .bl-cta-richtext {
   margin-left: auto;
   margin-right: auto;
 }
@@ -59,7 +90,8 @@
     text-align: center;
     padding: var(--space-4, 2rem);
   }
-  .bl-cta-description {
+  .bl-cta-description,
+  .bl-cta-richtext {
     margin-left: auto;
     margin-right: auto;
   }

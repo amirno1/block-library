@@ -42,3 +42,6 @@ export type { FormProps, FormField } from './Form';
 
 export { RichBody } from './richText';
 export type { BodyCopy } from './richText';
+
+export { default as ScrollVideoCTA } from './ScrollVideoCTA';
+export type { ScrollVideoCTAProps, ScrollVideoCTABeat, ScrollVideoCTAPosition } from './ScrollVideoCTA';
