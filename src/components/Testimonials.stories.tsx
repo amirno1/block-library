@@ -31,3 +31,20 @@ export const Default: Story = {
     ],
   },
 };
+
+export const Carousel: Story = {
+  args: {
+    ...Default.args,
+    variant: 'carousel',
+    imageSrc: 'https://placehold.co/1200x1400/222/fff?text=Reviews+Image',
+    imagePosition: 'left',
+    autoAdvanceMs: 3000,
+  },
+};
+
+export const CarouselImageRight: Story = {
+  args: {
+    ...Carousel.args,
+    imagePosition: 'right',
+  },
+};

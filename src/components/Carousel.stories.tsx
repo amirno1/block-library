@@ -39,3 +39,15 @@ export const Images: Story = {
     ],
   },
 };
+
+export const Deck: Story = {
+  args: {
+    variant: 'deck',
+    slides: [
+      { imageSrc: 'https://placehold.co/900x675', imageAlt: 'Opening night', caption: 'Opening night, October 2025' },
+      { imageSrc: 'https://placehold.co/900x675', imageAlt: 'The main studio space', caption: 'The main studio space' },
+      { imageSrc: 'https://placehold.co/900x675', imageAlt: 'A weekday workshop', caption: 'A weekday workshop in progress' },
+    ],
+    autoAdvanceMs: 3000,
+  },
+};

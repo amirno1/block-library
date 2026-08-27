@@ -67,11 +67,18 @@
   font-size: var(--bl-cta-button-size, var(--fs-h5, 1.0625rem));
   font-weight: var(--font-weight-bold, 600);
   text-decoration: none;
-  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 150ms ease;
+  /* Same technique as every other button on the site: a single property
+     (background-color), linear, 200ms — was a transform lift + shadow,
+     which read as inconsistent against buttons elsewhere that only ever
+     darken on hover. */
+  transition: background-color 200ms linear;
 }
 .bl-cta-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  /* This button's resting color is inverse (white on a dark panel), so
+     there's no existing "-dark" shade to shift to the way a primary-color
+     button has — mixed toward the panel's own color for a subtle,
+     self-contained darken that works on any client's palette. */
+  background: color-mix(in srgb, var(--color-text-inverse, #fff) 85%, var(--color-primary, #1a1a1a) 15%);
 }
 
 .bl-cta--centered {
@@ -151,6 +158,12 @@
 .bl-cta-image-panel .bl-cta-button {
   background: var(--bl-cta-panel-button-bg, var(--color-accent, #fff));
   color: var(--bl-cta-panel-button-text, var(--color-text, #1a1a1a));
+}
+.bl-cta-image-panel .bl-cta-button:hover {
+  /* Mixed toward this variant's own text color rather than the plain
+     .bl-cta-button hover's assumption, since this button's background is
+     overridden per-instance and could be anything. */
+  background: color-mix(in srgb, var(--bl-cta-panel-button-bg, var(--color-accent, #fff)) 85%, var(--bl-cta-panel-button-text, var(--color-text, #1a1a1a)) 15%);
 }
 
 @media (max-width: 720px) {

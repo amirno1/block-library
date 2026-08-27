@@ -64,3 +64,105 @@
   font-size: var(--bl-testimonials-role-size, var(--fs-small, 0.8125rem));
   color: var(--color-text-muted, #666);
 }
+
+/* --- carousel variant -----------------------------------------------------
+   Image fills one side, carousel the other — a normal section, nothing
+   pinned or held in place. Taller than the grid variant on purpose: the
+   image's own crop pans top-to-bottom as the section scrolls past (see
+   Testimonials.tsx), and that needs real vertical room to read as a
+   reveal rather than a barely-there nudge. The carousel itself (see
+   Carousel.tsx/css) already owns the loop/auto-advance/arrows/dots — this
+   component only supplies the layout, the image, and the pan/zoom
+   mechanics, plus mapping each review's name+role into Carousel's single
+   attribution line. */
+.bl-testimonials--carousel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  min-height: 780px;
+  /* No gap: the image fills its whole column edge-to-edge, and the panel's
+     side of the section is just ambient background (usually a tint set on
+     the wrapping element around this component) showing through wherever
+     nothing else is drawn. A `gap` here has no background of its own, so
+     it just extends that ambient tint past the image's true edge — making
+     the tinted side visually wider than the image side, off the true 50%
+     line. Breathing room instead comes from padding on the panel's own
+     inner edge (see below). */
+}
+/* No image set yet (e.g. the field was just added and nobody's uploaded
+   one) — collapse to a single, centered column instead of leaving half
+   the section visibly empty. */
+.bl-testimonials--no-image {
+  grid-template-columns: 1fr;
+  min-height: 0;
+}
+.bl-testimonials--no-image .bl-testimonials-carousel-panel {
+  max-width: 640px;
+  margin: 0 auto;
+  align-items: center;
+  text-align: center;
+  padding: var(--space-6, 4rem) var(--content-padding, 20px);
+}
+.bl-testimonials--no-image .bl-testimonials-head--carousel {
+  text-align: center;
+}
+.bl-testimonials--image-right {
+  grid-template-columns: 1fr 1fr;
+}
+.bl-testimonials--image-right .bl-testimonials-media {
+  order: 2;
+}
+.bl-testimonials-media {
+  position: relative;
+  overflow: hidden;
+}
+.bl-testimonials-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* The image's crop pans and zooms via GSAP ScrollTrigger as the section
+   transits the viewport (see Testimonials.tsx) — nothing here is pinned
+   or held in place; the section scrolls exactly like any other, only the
+   image's own object-position/scale are scroll-linked. */
+.bl-testimonials-carousel-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Outer edge (facing the true viewport edge) keeps the full inset; inner
+     edge (facing the image, now with no gap between them — see
+     .bl-testimonials--carousel) gets a smaller but real inset so content
+     doesn't sit flush against the image. */
+  padding: var(--space-6, 4rem) var(--content-padding, 20px) var(--space-6, 4rem) var(--space-5, 3rem);
+}
+/* imagePosition="right" flips which side is "outer": panel is now on the
+   left, so it's the left edge that needs the full inset and the right
+   (facing the image) that gets the smaller inset. */
+.bl-testimonials--image-right .bl-testimonials-carousel-panel {
+  padding: var(--space-6, 4rem) var(--space-5, 3rem) var(--space-6, 4rem) var(--content-padding, 20px);
+}
+.bl-testimonials-head--carousel {
+  max-width: none;
+  margin: 0 0 var(--space-5, 3rem);
+  text-align: left;
+}
+@media (max-width: 1125px) {
+  .bl-testimonials--carousel,
+  .bl-testimonials--image-right {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .bl-testimonials--image-right .bl-testimonials-media {
+    order: 0;
+  }
+  .bl-testimonials-media {
+    aspect-ratio: 16 / 10;
+  }
+  .bl-testimonials-carousel-panel {
+    padding: var(--space-5, 3rem) var(--content-padding, 20px);
+  }
+}

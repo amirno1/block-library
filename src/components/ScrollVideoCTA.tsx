@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { RichBody, type BodyCopy } from './richText';
 
-export type ScrollVideoCTAPosition = 'left-center' | 'right-center' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'top-center';
+export type ScrollVideoCTAPosition = 'left-center' | 'right-center' | 'center' | 'bottom-left' | 'bottom-center' | 'bottom-right' | 'top-center';
 
 export interface ScrollVideoCTABeat {
   text: string;

@@ -26,20 +26,18 @@
   pointer-events: none;
 }
 
-/* Real HTML, typography straight over the footage (no card), with a soft
-   translucent wash behind the text only, not a hard-edged box, so it stays
-   legible without looking bolted on. */
+/* Real HTML, typography straight over the footage — no card/background
+   behind it, just bold text directly on the video. */
 .bl-scroll-video-cta-text {
   position: absolute;
   z-index: 2;
   margin: 0;
-  padding: 0.6rem 0.9rem;
-  max-width: 480px;
-  background: color-mix(in srgb, var(--color-bg, #f0f0ec) 72%, transparent);
+  max-width: 560px;
   color: var(--color-text, #1a1a1a);
   font-family: var(--font-heading, sans-serif);
-  font-size: var(--bl-scroll-video-cta-text-size, var(--fs-h4, 1.375rem));
-  line-height: 1.4;
+  font-size: var(--bl-scroll-video-cta-text-size, 60px);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: 1.3;
 }
 
 .bl-scroll-video-cta-panel {
@@ -50,8 +48,8 @@
 }
 .bl-scroll-video-cta-heading {
   font-family: var(--font-heading, sans-serif);
-  font-size: var(--bl-scroll-video-cta-heading-size, var(--fs-h2, 2.25rem));
-  font-weight: var(--font-weight-bold, 600);
+  font-size: var(--bl-scroll-video-cta-heading-size, 60px);
+  font-weight: var(--font-weight-bold, 700);
   margin: 0 0 var(--space-2, 1rem);
 }
 .bl-scroll-video-cta-description {
@@ -83,7 +81,10 @@
   justify-content: center;
   min-height: 52px;
   padding: 0.9rem 2rem;
-  border-radius: var(--radius-lg, 999px);
+  /* Always a pill — buttons stay rounded even on a client whose cards/
+     panels are otherwise square (--radius-lg can be 0), matching the
+     site's own primary .btn class, which does the same. */
+  border-radius: 999px;
   background: var(--color-primary, #1a1a1a);
   color: var(--color-text-inverse, #fff);
   font-family: var(--font-body, sans-serif);
@@ -109,6 +110,12 @@
   right: var(--content-padding, 20px);
   transform: translateY(-50%);
   text-align: left;
+}
+.bl-scroll-video-cta-pos-center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
 }
 .bl-scroll-video-cta-pos-top-center {
   top: 12%;

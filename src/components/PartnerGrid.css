@@ -186,20 +186,22 @@
   justify-content: center;
   min-height: 44px;
   padding: 0.6rem 1.5rem;
-  border-radius: var(--radius-lg, 999px);
+  /* Always a pill — see ScrollVideoCTA.css for why this doesn't read --radius-lg. */
+  border-radius: 999px;
   background: var(--color-primary, #1a1a1a);
   color: var(--color-text-inverse, #fff);
   font-family: var(--font-body, sans-serif);
   font-size: var(--fs-small, 0.875rem);
   font-weight: var(--font-weight-bold, 600);
   text-decoration: none;
-  transition: background-color var(--duration-base, 220ms) var(--ease-out, ease);
+  /* Same timing as every other button on the site now (was 220ms eased). */
+  transition: background-color 200ms linear;
 }
 .bl-partners-detail-link:hover {
   background: var(--color-primary-dark, #000);
 }
 
-@media (max-width: 860px) {
+@media (max-width: 1125px) {
   .bl-partners {
     grid-template-columns: 1fr;
   }

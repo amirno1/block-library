@@ -1,0 +1,253 @@
+/* Card deck — an animated stack of overlapping cards, shared by
+   TestimonialDeck.tsx (Testimonials' "carousel" variant) and Carousel.tsx's
+   "deck" variant, in place of a plain crossfade. Both consume the same
+   .bl-deck-root/.bl-deck-stage/.bl-deck-card/.bl-deck-nav classes here and
+   the same useCardDeck.ts state machine — only what's rendered inside each
+   .bl-deck-card (quote text vs. an image) differs per consumer.
+   All cards share one CSS Grid cell (.bl-deck-stage), so the stage's
+   height is the tallest card's natural height — no JS measurement needed,
+   and no layout shift when a shorter/longer item becomes the front card.
+   Only the front card sits in the accessibility tree; middle/back/hidden
+   layers are aria-hidden so a screen reader never encounters duplicate or
+   stale content. */
+
+.bl-deck-root {
+  position: relative;
+  /* Room for the below-deck nav row on narrow screens, and for the
+     absolutely-positioned progress indicator beneath the deck on wide
+     screens (see .bl-deck-progress). */
+  padding-bottom: var(--space-6, 3.5rem);
+}
+
+.bl-deck-stage {
+  display: grid;
+  position: relative;
+}
+
+.bl-deck-card {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  /* The site's warm cream (same token the navbar itself resolves to), not
+     a plain white surface — requested explicitly so the cards read as
+     part of the same warm palette rather than a generic white card. */
+  background: var(--color-bg, #faf7f0);
+  border-radius: 32px;
+  padding: var(--space-6, 3.5rem) var(--space-4, 2rem);
+  transition:
+    transform 800ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    opacity 800ms cubic-bezier(0.22, 0.61, 0.36, 1),
+    box-shadow 800ms cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.bl-deck-card--front {
+  z-index: 3;
+  transform: translate(0, 0) rotate(0deg) scale(1);
+  opacity: 1;
+  box-shadow: var(--shadow-lg, 0 16px 40px rgba(0, 0, 0, 0.14));
+}
+.bl-deck-card--middle {
+  z-index: 2;
+  transform: translate(18px, -14px) rotate(3deg) scale(0.97);
+  opacity: 0.92;
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(0, 0, 0, 0.1));
+  pointer-events: none;
+}
+.bl-deck-card--back {
+  z-index: 1;
+  transform: translate(-16px, -24px) rotate(-3deg) scale(0.94);
+  opacity: 0.78;
+  box-shadow: var(--shadow-sm, 0 1px 3px rgba(0, 0, 0, 0.08));
+  pointer-events: none;
+}
+/* Cards beyond the third layer (only reachable once there are more than
+   three reviews) — kept at the back card's own position so that when one
+   of them eventually becomes the visible back card, it only needs to
+   fade in rather than travel from some arbitrary offscreen point. Still a
+   normal box in the grid cell (not display:none), so it still counts
+   toward the stage's auto-sized height. */
+.bl-deck-card--hidden {
+  z-index: 0;
+  transform: translate(-16px, -24px) rotate(-3deg) scale(0.94);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bl-deck-quote-mark {
+  font-family: var(--font-heading, serif);
+  font-size: 3.75rem;
+  line-height: 1;
+  color: var(--color-accent, var(--color-primary));
+  opacity: 0.5;
+  margin: 0 0 var(--space-1, 0.5rem);
+}
+.bl-deck-quote-text {
+  font-family: var(--font-heading, serif);
+  font-size: var(--fs-h3, 1.5rem);
+  font-weight: 500;
+  line-height: 1.4;
+  /* Deep Bijfleur green, not the shared near-black --color-text — this
+     card treatment is deliberately its own thing, not a re-skin of the
+     generic .bl-carousel-quote-text a few rules away in Carousel.css. */
+  color: var(--color-primary-dark, var(--color-text));
+  margin: 0 0 var(--space-3, 1.25rem);
+}
+.bl-deck-quote-author {
+  font-size: var(--fs-small, 0.875rem);
+  color: var(--color-text-muted, #666);
+  margin: auto 0 0;
+}
+
+/* --- image cards (Carousel.tsx's "deck" variant) ----------------------
+   Same stack/shadow/z-index treatment as a quote card, but the image
+   fills the card edge-to-edge instead of sitting inside text padding. */
+.bl-deck-card--image {
+  padding: 0;
+  overflow: hidden;
+}
+.bl-deck-card--image img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+.bl-deck-card--image figcaption {
+  padding: var(--space-3, 1.25rem) var(--space-4, 1.5rem);
+  font-size: var(--fs-small, 0.875rem);
+  color: var(--color-text-muted, #666);
+  text-align: center;
+}
+
+/* --- nav: arrows + progress ------------------------------------------
+   Desktop: arrows sit at the stage's vertical center, just outside its
+   left/right edges; the progress readout floats centered beneath the
+   stage. All absolutely positioned against .bl-deck-root so they
+   don't affect the stage's own grid sizing. */
+.bl-deck-nav {
+  position: absolute;
+  inset: 0;
+  /* Higher than any .bl-deck-card layer (max z-index: 3) — .bl-deck-stage
+     doesn't establish its own stacking context (position: relative with
+     no z-index), so the front card's z-index otherwise compares directly
+     against this sibling and can end up winning, silently eating clicks
+     meant for the arrows. */
+  z-index: 4;
+  pointer-events: none;
+}
+.bl-deck-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border, rgba(0, 0, 0, 0.15));
+  background: var(--color-surface, #fff);
+  color: var(--color-primary-dark, var(--color-text));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: background-color 200ms linear;
+}
+.bl-deck-arrow:hover {
+  background: var(--color-primary-tint, #f0f0f0);
+}
+.bl-deck-arrow:focus-visible {
+  outline: 3px solid var(--color-accent, #333);
+  outline-offset: 2px;
+}
+.bl-deck-arrow svg {
+  width: 20px;
+  height: 20px;
+}
+.bl-deck-arrow--prev {
+  left: -18px;
+}
+.bl-deck-arrow--next {
+  right: -18px;
+}
+.bl-deck-progress {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  font-size: var(--fs-small, 0.875rem);
+  color: var(--color-text-muted, #666);
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Reduced motion: no travel, no fan of peeking cards — the stack
+   collapses to a plain, instant front-card swap. Only opacity moves, and
+   briefly. Controls stay exactly as functional as the animated version. */
+.bl-deck-root--reduced-motion .bl-deck-card {
+  transition: opacity 200ms linear;
+}
+.bl-deck-root--reduced-motion .bl-deck-card--middle,
+.bl-deck-root--reduced-motion .bl-deck-card--back,
+.bl-deck-root--reduced-motion .bl-deck-card--hidden {
+  transform: none;
+  opacity: 0;
+}
+.bl-deck-root--reduced-motion .bl-deck-card--front {
+  transform: none;
+}
+
+@media (max-width: 1125px) {
+  .bl-deck-card {
+    border-radius: 24px;
+  }
+  .bl-deck-card--middle {
+    transform: translate(10px, -8px) rotate(2deg) scale(0.97);
+  }
+  .bl-deck-card--back,
+  .bl-deck-card--hidden {
+    transform: translate(-10px, -14px) rotate(-2deg) scale(0.95);
+  }
+  .bl-deck-quote-text {
+    font-size: var(--fs-h4, 1.25rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .bl-deck-card {
+    padding: var(--space-5, 2.5rem) var(--space-3, 1.5rem);
+  }
+  .bl-deck-card--middle {
+    transform: translate(6px, -6px) rotate(1.5deg) scale(0.98);
+  }
+  .bl-deck-card--back,
+  .bl-deck-card--hidden {
+    transform: translate(-6px, -10px) rotate(-1.5deg) scale(0.96);
+  }
+
+  /* Not enough side room for the arrows to overhang the stage without
+     risking overflow — move the whole nav row below the deck instead. */
+  .bl-deck-root {
+    padding-bottom: 0;
+  }
+  .bl-deck-nav {
+    position: static;
+    inset: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4, 1.5rem);
+    margin-top: var(--space-4, 1.5rem);
+  }
+  .bl-deck-arrow {
+    position: static;
+    transform: none;
+  }
+  .bl-deck-arrow:hover {
+    background: var(--color-primary-tint, #f0f0f0);
+  }
+  .bl-deck-progress {
+    position: static;
+    transform: none;
+  }
+}
