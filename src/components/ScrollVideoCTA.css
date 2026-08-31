@@ -35,7 +35,10 @@
 }
 
 /* Real HTML, typography straight over the footage — no card/background
-   behind it, just bold text directly on the video. */
+   behind it, just bold text directly on the video. A soft light-colored
+   text-shadow (not a background box, which would fight that "direct on
+   the footage" look) keeps it readable regardless of which part of the
+   video happens to be showing underneath at that scroll position. */
 .bl-scroll-video-cta-text {
   position: absolute;
   z-index: 2;
@@ -46,6 +49,7 @@
   font-size: var(--bl-scroll-video-cta-text-size, 60px);
   font-weight: var(--font-weight-bold, 700);
   line-height: 1.3;
+  text-shadow: 0 2px 20px color-mix(in srgb, var(--color-bg, #fff) 75%, transparent);
 }
 
 .bl-scroll-video-cta-panel {
@@ -59,10 +63,12 @@
   font-size: var(--bl-scroll-video-cta-heading-size, 60px);
   font-weight: var(--font-weight-bold, 700);
   margin: 0 0 var(--space-2, 1rem);
+  text-shadow: 0 2px 20px color-mix(in srgb, var(--color-bg, #fff) 75%, transparent);
 }
 .bl-scroll-video-cta-description {
   color: var(--color-text-muted, #666);
   margin: 0 0 var(--space-3, 1.5rem);
+  text-shadow: 0 2px 16px color-mix(in srgb, var(--color-bg, #fff) 75%, transparent);
 }
 /* --- CMS rich text ------------------------------------------------------
    See AboutSection.css — same contract, mirrors .bl-scroll-video-cta-description. */
@@ -186,7 +192,7 @@
        push the text off-screen. */
     transform: none;
     text-align: center;
-    font-size: var(--bl-scroll-video-cta-text-size-mobile, var(--fs-h5, 1.0625rem));
+    font-size: var(--bl-scroll-video-cta-text-size-mobile, 28px);
   }
   .bl-scroll-video-cta-panel,
   .bl-scroll-video-cta-panel--static {
