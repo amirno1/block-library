@@ -63,6 +63,31 @@ function isDataSaverOn(): boolean {
   return Boolean(nav.connection?.saveData);
 }
 
+// Each position variant's CSS class centers itself with `transform:
+// translateX/Y(-50%)` (see ScrollVideoCTA.css) — but GSAP takes full
+// ownership of an element's `transform` the moment it animates any
+// transform-related property on it (its `y` entrance-slide below), and
+// re-derives the whole property every tick purely from what GSAP itself
+// is tracking. Anything the CSS class set is silently discarded, not
+// merged with it. xPercent/yPercent are properties GSAP tracks natively,
+// so setting them once up front (and never touching them again) keeps
+// the same centering GSAP now owns, instead of losing it.
+//
+// Horizontal centering only applies on desktop, though: at the ≤720px
+// breakpoint (see ScrollVideoCTA.css) both the panel and the beat text
+// switch from "positioned at a point, centered via transform" to
+// "spans left:0/left:content-padding to right:0/right:content-padding"
+// — already horizontally centered by being full-width, no transform
+// needed. Applying xPercent:-50 there too would shift that already
+// full-width element another half-of-its-own-width to the left,
+// pushing its content half off-screen. Vertical centering (yPercent)
+// still applies at both widths — the mobile CSS doesn't change that axis.
+function centeringPercentFor(position: ScrollVideoCTAPosition, isMobileLayout: boolean): { xPercent: number; yPercent: number } {
+  const needsXCenter = !isMobileLayout && (position === 'center' || position === 'top-center' || position === 'bottom-center');
+  const needsYCenter = position === 'center' || position === 'left-center' || position === 'right-center';
+  return { xPercent: needsXCenter ? -50 : 0, yPercent: needsYCenter ? -50 : 0 };
+}
+
 export default function ScrollVideoCTA({
   videoSrc,
   posterSrc,
@@ -143,8 +168,20 @@ export default function ScrollVideoCTA({
         defaults: { ease: 'none' },
       });
 
-      gsap.set(beatElsRef.current, { autoAlpha: 0, y: 20 });
-      gsap.set(panelRef.current, { autoAlpha: 0, y: 22 });
+      // Checked once at setup, same as the reduced-motion/data-saver checks
+      // above — this component doesn't otherwise react to crossing the
+      // breakpoint mid-session (a resize-triggered re-layout would need its
+      // own effect and isn't otherwise needed here).
+      const isMobileLayout = window.matchMedia('(max-width: 720px)').matches;
+      const beatOffsets = beats.map((beat) => centeringPercentFor(beat.position || 'bottom-center', isMobileLayout));
+      gsap.set(beatElsRef.current, {
+        autoAlpha: 0,
+        y: 20,
+        xPercent: (i) => beatOffsets[i]?.xPercent ?? 0,
+        yPercent: (i) => beatOffsets[i]?.yPercent ?? 0,
+      });
+      const panelOffsets = centeringPercentFor(ctaPosition, isMobileLayout);
+      gsap.set(panelRef.current, { autoAlpha: 0, y: 22, xPercent: panelOffsets.xPercent, yPercent: panelOffsets.yPercent });
 
       beats.forEach((beat, i) => {
         const el = beatElsRef.current[i];

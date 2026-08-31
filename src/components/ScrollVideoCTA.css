@@ -7,7 +7,15 @@
 .bl-scroll-video-cta-stage {
   position: sticky;
   top: 0;
-  height: 100svh;
+  /* dvh, not svh — svh is pinned to the smallest possible mobile viewport
+     (address bar fully expanded). Once the browser's chrome collapses
+     mid-scroll (very common — it's what scrolling does on iOS/Android),
+     the real viewport grows past that fixed size, leaving a gap below
+     this sticky stage that exposes whatever sits behind it (the site's
+     fixed-position Hero). dvh tracks the actual current viewport instead,
+     matching the same unit Hero.css already uses on .bl-hero--full for
+     this exact reason. */
+  height: 100dvh;
   overflow: hidden;
   background: var(--color-bg, #f0f0ec);
 }
@@ -146,7 +154,7 @@
    it's always the same centered layout regardless of `ctaPosition`. */
 .bl-scroll-video-cta--static {
   position: relative;
-  height: 100svh;
+  height: 100dvh;
   overflow: hidden;
   background: var(--color-bg, #f0f0ec);
 }
@@ -190,6 +198,16 @@
     max-width: none;
     padding: 0 var(--content-padding, 20px);
     text-align: center;
+  }
+  /* The bottom-pin above is a sensible universal fallback for the
+     left/right/top variants, which don't translate to a narrow screen —
+     but ctaPosition="center" asked to be vertically centered, and should
+     stay that way on mobile too rather than being silently overridden to
+     always sit at the bottom regardless of what was requested. */
+  .bl-scroll-video-cta-panel.bl-scroll-video-cta-pos-center {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
   }
   .bl-scroll-video-cta-heading {
     font-size: var(--bl-scroll-video-cta-heading-size-mobile, var(--fs-h3, 1.75rem));
