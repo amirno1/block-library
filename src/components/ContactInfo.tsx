@@ -9,6 +9,11 @@ export interface ContactInfoProps {
   address?: string;
   phone?: string;
   email?: string;
+  /** Labels for the three detail rows above — default Dutch, override for
+   * any other language this component is used in. */
+  addressLabel?: string;
+  phoneLabel?: string;
+  emailLabel?: string;
   /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-contact-heading-size': '3rem' }`. Shares its tokens with ContactMap since it's the same markup, just without the map — see ContactMap.css. */
   style?: CSSProperties;
 }
@@ -20,7 +25,18 @@ export interface ContactInfoProps {
  * layout, e.g. info+form side by side with the map full-width below, or no
  * map at all.
  */
-export default function ContactInfo({ eyebrow, heading, description, address, phone, email, style }: ContactInfoProps) {
+export default function ContactInfo({
+  eyebrow,
+  heading,
+  description,
+  address,
+  phone,
+  email,
+  addressLabel = 'Adres',
+  phoneLabel = 'Telefoon',
+  emailLabel = 'E-mail',
+  style,
+}: ContactInfoProps) {
   return (
     <div className="bl-contact-info" style={style}>
       {eyebrow && <span className="bl-contact-eyebrow">{eyebrow}</span>}
@@ -29,13 +45,13 @@ export default function ContactInfo({ eyebrow, heading, description, address, ph
       <dl className="bl-contact-details">
         {address && (
           <div>
-            <dt>Adres</dt>
+            <dt>{addressLabel}</dt>
             <dd>{address}</dd>
           </div>
         )}
         {phone && (
           <div>
-            <dt>Telefoon</dt>
+            <dt>{phoneLabel}</dt>
             <dd>
               <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
             </dd>
@@ -43,7 +59,7 @@ export default function ContactInfo({ eyebrow, heading, description, address, ph
         )}
         {email && (
           <div>
-            <dt>E-mail</dt>
+            <dt>{emailLabel}</dt>
             <dd>
               <a href={`mailto:${email}`}>{email}</a>
             </dd>

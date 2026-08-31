@@ -10,6 +10,11 @@ export interface ContactMapProps {
   email?: string;
   /** Defaults to `address` — pass a more specific query if the map should center on something else. */
   mapQuery?: string;
+  /** Labels for the three detail rows and the map iframe title — default Dutch, override for any other language this component is used in. */
+  addressLabel?: string;
+  phoneLabel?: string;
+  emailLabel?: string;
+  mapTitle?: string;
   /** Per-instance overrides for any text size in this component — e.g. `{ '--bl-contact-heading-size': '3rem' }`. See ContactMap.css for the full list of --bl-contact-*-size variables. Falls back to the shared --fs-* scale when unset. */
   style?: React.CSSProperties;
 }
@@ -22,6 +27,10 @@ export default function ContactMap({
   phone,
   email,
   mapQuery,
+  addressLabel = 'Adres',
+  phoneLabel = 'Telefoon',
+  emailLabel = 'E-mail',
+  mapTitle = 'Locatie op kaart',
   style,
 }: ContactMapProps) {
   const query = mapQuery || address;
@@ -35,13 +44,13 @@ export default function ContactMap({
         <dl className="bl-contact-details">
           {address && (
             <div>
-              <dt>Adres</dt>
+              <dt>{addressLabel}</dt>
               <dd>{address}</dd>
             </div>
           )}
           {phone && (
             <div>
-              <dt>Telefoon</dt>
+              <dt>{phoneLabel}</dt>
               <dd>
                 <a href={`tel:${phone.replace(/\s+/g, '')}`}>{phone}</a>
               </dd>
@@ -49,7 +58,7 @@ export default function ContactMap({
           )}
           {email && (
             <div>
-              <dt>E-mail</dt>
+              <dt>{emailLabel}</dt>
               <dd>
                 <a href={`mailto:${email}`}>{email}</a>
               </dd>
@@ -60,7 +69,7 @@ export default function ContactMap({
       {query && (
         <div className="bl-contact-map">
           <iframe
-            title="Locatie op kaart"
+            title={mapTitle}
             src={`https://maps.google.com/maps?q=${encodeURIComponent(query)}&output=embed`}
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

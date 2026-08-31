@@ -18,6 +18,8 @@ export interface HeroProps {
   textPosition?: 'center' | 'left' | 'right' | 'split';
   /** variant="full" only — bouncing "scroll down" chevron pinned to the bottom, clicking scrolls one viewport height. */
   scrollHint?: boolean;
+  /** aria-label for the scroll-hint button — default English, override for any other language. */
+  scrollHintLabel?: string;
   /** variant="full" only — short motto/tagline rendered below the CTA, styled light to match the rest of the hero copy. */
   quote?: string;
   quoteAttribution?: string;
@@ -38,6 +40,7 @@ export default function Hero({
   posterSrc,
   textPosition = 'center',
   scrollHint = false,
+  scrollHintLabel = 'Scroll down',
   quote,
   quoteAttribution,
   style,
@@ -98,7 +101,7 @@ export default function Hero({
           <button
             type="button"
             className="bl-hero-scroll-hint"
-            aria-label="Scroll down"
+            aria-label={scrollHintLabel}
             onClick={() => window.scrollBy({ top: window.innerHeight, behavior: 'smooth' })}
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
