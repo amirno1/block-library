@@ -62,6 +62,9 @@
 }
 .bl-service-tabs-item.is-active {
   background: #F8EEE6;
+  /* Already open — clicking it again does nothing, so it shouldn't read
+     as clickable. Only the still-closed items get the pointer/hand. */
+  cursor: default;
 }
 /* Open item doesn't get the hover treatment at all — it's already
    distinguished by its fill, and it shouldn't visually react to hover. */

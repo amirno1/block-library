@@ -11,6 +11,23 @@
   direction: ltr;
 }
 
+/* centerHeading: the title becomes its own full-width row, spanning both
+   columns, ahead of the text/logo split below it — rather than sitting
+   inline inside .bl-partners-text (the default). Only a direct grid child
+   can span columns like this, which is why the TSX renders it as a
+   sibling rather than a nested element in this mode. */
+.bl-partners--center-heading {
+  grid-template-rows: auto 1fr;
+}
+.bl-partners-head {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-bottom: var(--space-4, 2rem);
+}
+.bl-partners--center-heading .bl-partners-heading {
+  margin-bottom: 0;
+}
+
 /* Inset only on the outer side — see AboutSection.css for the reasoning. The
    logo grid opts into the same inset on its own side, and the grid `gap`
    covers the space between the two. Flips with textPosition. */
@@ -53,6 +70,18 @@
 }
 .bl-partners--text-right .bl-partners-grid {
   padding: 0 0 0 var(--content-padding, 20px);
+}
+/* 1 or 2 partners: a fixed 200-320px-per-column minimum (desktop) doesn't
+   fit narrow viewports — the mobile override below replaces it with a
+   viewport-safe track instead of just removing it, so this never depends
+   on inline style beating (or losing to) a stylesheet rule. */
+.bl-partners-grid--count-1 {
+  grid-template-columns: minmax(200px, 320px);
+  justify-content: center;
+}
+.bl-partners-grid--count-2 {
+  grid-template-columns: repeat(2, minmax(200px, 320px));
+  justify-content: center;
 }
 .bl-partners-cell {
   /* White, not transparent — see PartnerGrid.tsx for the reference-site
@@ -214,6 +243,17 @@
   }
   .bl-partners-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  /* The 200-320px fixed-width tracks above are sized for desktop; on a
+     narrow viewport 2×200px plus the gap doesn't fit. minmax(0, 1fr) lets
+     the 2-partner case shrink to whatever width is actually available,
+     same as the general 3+ case just above. The 1-partner case stays
+     centered but capped by the viewport instead of a fixed 200px floor. */
+  .bl-partners-grid--count-1 {
+    grid-template-columns: minmax(0, 320px);
+  }
+  .bl-partners-grid--count-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 

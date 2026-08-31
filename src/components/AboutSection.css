@@ -87,13 +87,18 @@
   .bl-about--split {
     grid-template-columns: 1fr;
   }
-  .bl-about--split .bl-about-media {
-    order: -1 !important;
+  .bl-about--split .bl-about-media,
+  .bl-about--split.bl-about--image-right .bl-about-media {
+    /* Matches the --image-right selector's specificity explicitly (3
+       classes vs. 2) instead of reaching for !important — that rule
+       otherwise wins on its own regardless of source order, since a media
+       query doesn't affect specificity. */
+    order: -1;
     aspect-ratio: 16 / 10;
   }
   .bl-about--split .bl-about-copy,
   .bl-about--split.bl-about--image-right .bl-about-copy {
-    order: 0 !important;
+    order: 0;
     /* Single column — the image is stacked above rather than beside, so there
        is no inner side and the copy needs the inset on both edges again. */
     padding: 0 var(--content-padding, 20px);

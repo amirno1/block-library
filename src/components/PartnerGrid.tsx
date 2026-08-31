@@ -35,6 +35,12 @@ export interface PartnerGridProps {
   body?: BodyCopy;
   /** Which side the heading/body text sits on; logos fill the other side. */
   textPosition?: 'left' | 'right';
+  /** Default: the heading sits inline above the body text, inside the same
+   * text-side column as everything else. Set true to instead render it as
+   * its own full-width, centered row spanning both columns — for sites
+   * that want the title centered across the whole section rather than
+   * aligned with the text side. */
+  centerHeading?: boolean;
   partners: Partner[];
   /** Label for the link inside the detail panel, when a partner has both a
    * `description` and an `href`. @default 'Visit website' */
@@ -43,7 +49,7 @@ export interface PartnerGridProps {
   style?: React.CSSProperties;
 }
 
-export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'left', partners, visitLabel = 'Visit website', style }: PartnerGridProps) {
+export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'left', centerHeading = false, partners, visitLabel = 'Visit website', style }: PartnerGridProps) {
   // A card with either a description or an href opens the detail panel —
   // it never navigates away directly, regardless of which of the two it
   // has. Only a card with neither stays a plain, inert image.
@@ -58,10 +64,16 @@ export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'le
   const active = activeIndex !== null ? partners[activeIndex] : null;
 
   return (
-    <section className={`bl-partners bl-partners--text-${textPosition}`} style={style}>
+    <section className={`bl-partners bl-partners--text-${textPosition}${centerHeading ? ' bl-partners--center-heading' : ''}`} style={style}>
+      {centerHeading && (eyebrow || heading) && (
+        <div className="bl-partners-head">
+          {eyebrow && <span className="bl-partners-eyebrow">{eyebrow}</span>}
+          {heading && <h2 className="bl-partners-heading">{heading}</h2>}
+        </div>
+      )}
       <div className="bl-partners-text">
-        {eyebrow && <span className="bl-partners-eyebrow">{eyebrow}</span>}
-        {heading && <h2 className="bl-partners-heading">{heading}</h2>}
+        {!centerHeading && eyebrow && <span className="bl-partners-eyebrow">{eyebrow}</span>}
+        {!centerHeading && heading && <h2 className="bl-partners-heading">{heading}</h2>}
         <RichBody body={body} paragraphClassName="bl-partners-paragraph" richClassName="bl-partners-richtext" />
 
         <div className={`bl-partners-detail ${active ? 'is-open' : ''}`}>
@@ -84,21 +96,17 @@ export default function PartnerGrid({ eyebrow, heading, body, textPosition = 'le
         </div>
       </div>
       <div
-        className="bl-partners-grid"
-        style={
-          // Fewer than 3 partners: a fixed 3-column track would leave the
-          // row visibly lopsided (1 logo alone on the left, or 2 with a
-          // big gap). Cap the column count to the actual count instead,
-          // and center the row, so 1 or 2 partners each get a bigger,
-          // properly-centered cell rather than sharing space with empty
-          // tracks. 3+ keeps the default from the stylesheet (a real
-          // 3-per-row grid that wraps additional partners onto new rows).
-          partners.length === 1
-            ? { gridTemplateColumns: 'minmax(200px, 320px)', justifyContent: 'center' }
-            : partners.length === 2
-              ? { gridTemplateColumns: 'repeat(2, minmax(200px, 320px))', justifyContent: 'center' }
-              : undefined
-        }
+        // Fewer than 3 partners: a fixed 3-column track would leave the row
+        // visibly lopsided (1 logo alone on the left, or 2 with a big gap).
+        // Cap the column count to the actual count instead via a class (not
+        // inline style — inline style always wins over the stylesheet's own
+        // mobile media query below, which is exactly what let this overflow
+        // on narrow viewports before: a 200px-per-column minimum doesn't
+        // fit 2-up under ~420px, and no CSS override could ever beat an
+        // inline one to fix it). 3+ keeps the default from the stylesheet
+        // (a real 3-per-row grid that wraps additional partners onto new
+        // rows).
+        className={`bl-partners-grid${partners.length === 1 || partners.length === 2 ? ` bl-partners-grid--count-${partners.length}` : ''}`}
       >
         {partners.map((partner, i) => {
           // A partner with no logo image shows its name as text instead —
