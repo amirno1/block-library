@@ -45,3 +45,6 @@ export type { BodyCopy } from './richText';
 
 export { default as ScrollVideoCTA } from './ScrollVideoCTA';
 export type { ScrollVideoCTAProps, ScrollVideoCTABeat, ScrollVideoCTAPosition } from './ScrollVideoCTA';
+
+export { default as ErrorPage } from './ErrorPage';
+export type { ErrorPageProps, ErrorPageAction } from './ErrorPage';
