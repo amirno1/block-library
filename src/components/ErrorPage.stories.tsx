@@ -33,6 +33,17 @@ export const ServerError: Story = {
   },
 };
 
+export const WithRetryAction: Story = {
+  name: 'Retry action (onClick instead of href) — e.g. a Next.js error boundary',
+  args: {
+    code: '500',
+    heading: 'Something went wrong',
+    message: 'An unexpected error occurred. Try again, or go back to the homepage.',
+    primaryAction: { text: 'Try again', onClick: () => alert('retry() called') },
+    secondaryAction: { text: 'Go to the homepage', href: '#' },
+  },
+};
+
 export const Minimal: Story = {
   name: 'Minimal — no code, single action',
   args: {

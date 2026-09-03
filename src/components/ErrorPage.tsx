@@ -1,6 +1,9 @@
 export interface ErrorPageAction {
   text: string;
-  href: string;
+  /** A navigational recovery (e.g. "Go to the homepage"). Provide exactly one of `href`/`onClick`. */
+  href?: string;
+  /** A non-navigational recovery (e.g. a Next.js error boundary's retry function). Provide exactly one of `href`/`onClick`. */
+  onClick?: () => void;
 }
 
 export interface ErrorPageProps {
@@ -14,6 +17,21 @@ export interface ErrorPageProps {
   secondaryAction?: ErrorPageAction;
   /** Per-instance overrides — e.g. `{ '--bl-error-code-size': '4rem' }`. See ErrorPage.css for the full list of --bl-error-*-size variables. */
   style?: React.CSSProperties;
+}
+
+function ErrorAction({ action, className }: { action: ErrorPageAction; className: string }) {
+  if (action.onClick) {
+    return (
+      <button type="button" className={className} onClick={action.onClick}>
+        {action.text}
+      </button>
+    );
+  }
+  return (
+    <a className={className} href={action.href}>
+      {action.text}
+    </a>
+  );
 }
 
 export default function ErrorPage({
@@ -39,13 +57,9 @@ export default function ErrorPage({
           </ul>
         )}
         <div className="bl-error-actions">
-          <a className="bl-error-button bl-error-button--primary" href={primaryAction.href}>
-            {primaryAction.text}
-          </a>
+          <ErrorAction action={primaryAction} className="bl-error-button bl-error-button--primary" />
           {secondaryAction && (
-            <a className="bl-error-button bl-error-button--secondary" href={secondaryAction.href}>
-              {secondaryAction.text}
-            </a>
+            <ErrorAction action={secondaryAction} className="bl-error-button bl-error-button--secondary" />
           )}
         </div>
       </div>
